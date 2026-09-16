@@ -2,7 +2,7 @@
 
 AIを道具として使いながら作った、小さなWebアプリの置き場所です。
 
-🔗 **https://makik-0-iwata.github.io/ai-lab/**
+🔗 **https://makik-0-iwata.github.io/AI-lab/**
 
 ---
 
