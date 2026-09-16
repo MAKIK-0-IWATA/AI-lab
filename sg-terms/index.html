@@ -1,0 +1,1235 @@
+<title>SG用語 ドリル</title>
+
+<style>
+  :root{
+    --paper:#FBFAF7; --card:#FFFFFF; --ink:#1C1F26; --ink-soft:#5C6274;
+    --line:#E4E1D9; --line-soft:#EFEDE7;
+    --ai:#2B4C7E; --ai-soft:#EAF0F8; --ai-ink:#2B4C7E;
+    --ok:#2C7A58; --ok-soft:#E6F2EC;
+    --ng:#B2433A; --ng-soft:#FAEBE9;
+    --shadow:0 1px 2px rgba(28,31,38,.06), 0 8px 24px -12px rgba(28,31,38,.18);
+    --mincho:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+    --gothic:"Hiragino Sans","Yu Gothic",YuGothic,"Noto Sans JP",system-ui,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#14161B; --card:#1B1E25; --ink:#E9E7E2; --ink-soft:#9BA1AF;
+      --line:#2B2F39; --line-soft:#22262E;
+      --ai:#82ABDE; --ai-soft:#1D2734; --ai-ink:#A8C6E8;
+      --ok:#63B792; --ok-soft:#16281F;
+      --ng:#E08078; --ng-soft:#2B1B19;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#FBFAF7; --card:#FFFFFF; --ink:#1C1F26; --ink-soft:#5C6274;
+    --line:#E4E1D9; --line-soft:#EFEDE7;
+    --ai:#2B4C7E; --ai-soft:#EAF0F8; --ai-ink:#2B4C7E;
+    --ok:#2C7A58; --ok-soft:#E6F2EC;
+    --ng:#B2433A; --ng-soft:#FAEBE9;
+    --shadow:0 1px 2px rgba(28,31,38,.06), 0 8px 24px -12px rgba(28,31,38,.18);
+  }
+  :root[data-theme="dark"]{
+    --paper:#14161B; --card:#1B1E25; --ink:#E9E7E2; --ink-soft:#9BA1AF;
+    --line:#2B2F39; --line-soft:#22262E;
+    --ai:#82ABDE; --ai-soft:#1D2734; --ai-ink:#A8C6E8;
+    --ok:#63B792; --ok-soft:#16281F;
+    --ng:#E08078; --ng-soft:#2B1B19;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--gothic); font-size:16px; line-height:1.7;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:600px; margin:0 auto; padding:0 16px 120px}
+
+  /* ---- ヘッダ ---- */
+  .bar{
+    position:sticky; top:0; z-index:20; background:var(--paper);
+    border-bottom:1px solid var(--line); margin:0 -16px 20px; padding:12px 16px 10px;
+  }
+  .bar__row{display:flex; align-items:baseline; gap:10px}
+  .bar__title{
+    font-family:var(--mincho); font-size:17px; font-weight:600; letter-spacing:.04em; margin:0;
+  }
+  .bar__meta{
+    margin-left:auto; font-family:var(--mono); font-size:12px; color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+  }
+  .track{height:3px; background:var(--line-soft); border-radius:2px; margin-top:9px; overflow:hidden}
+  .track__fill{height:100%; background:var(--ai); width:0%; transition:width .25s ease}
+
+  /* ---- 共通 ---- */
+  h2{font-family:var(--mincho); font-size:15px; font-weight:600; letter-spacing:.08em; margin:0 0 12px; color:var(--ink-soft)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:var(--shadow)}
+  .stack{display:flex; flex-direction:column; gap:16px}
+  .row{display:flex; flex-wrap:wrap; gap:8px}
+
+  button{font:inherit; color:inherit; cursor:pointer; border:none; background:none}
+  button:focus-visible, input:focus-visible{outline:2px solid var(--ai); outline-offset:2px}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding:13px 18px; border-radius:8px; border:1px solid var(--line);
+    background:var(--card); font-size:15px; font-weight:600; min-height:48px;
+  }
+  .btn--primary{background:var(--ai); border-color:var(--ai); color:#fff}
+  :root[data-theme="dark"] .btn--primary, .btn--primary{color:#fff}
+  @media (prefers-color-scheme: dark){ .btn--primary{color:#10141A} }
+  :root[data-theme="dark"] .btn--primary{color:#10141A}
+  :root[data-theme="light"] .btn--primary{color:#fff}
+  .btn--wide{width:100%}
+  .btn[disabled]{opacity:.4; cursor:not-allowed}
+
+  .chip{
+    padding:9px 14px; border-radius:999px; border:1px solid var(--line);
+    background:var(--card); font-size:13.5px; min-height:40px; display:inline-flex; align-items:center;
+  }
+  .chip[aria-pressed="true"]{background:var(--ai-soft); border-color:var(--ai); color:var(--ai-ink); font-weight:600}
+
+  /* ---- 設定画面 ---- */
+  .lede{font-size:14px; color:var(--ink-soft); margin:0 0 22px}
+  .count-row{display:flex; align-items:center; gap:12px}
+  .count-row output{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:15px; min-width:3ch}
+  input[type=range]{flex:1; accent-color:var(--ai); min-height:40px}
+
+  .statgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden}
+  .statgrid div{background:var(--card); padding:14px 8px; text-align:center}
+  .statgrid b{display:block; font-family:var(--mono); font-size:21px; font-variant-numeric:tabular-nums; font-weight:600}
+  .statgrid span{font-size:11.5px; color:var(--ink-soft); letter-spacing:.04em}
+
+  /* ---- 出題 ---- */
+  .qkind{font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--ink-soft); margin:0 0 10px}
+  .qbody{font-size:17px; line-height:1.85; margin:0}
+  .qbody--term{font-family:var(--mincho); font-size:27px; line-height:1.5; letter-spacing:.02em}
+  .qabbr{font-family:var(--mono); font-size:13px; color:var(--ai-ink); margin:6px 0 0; letter-spacing:.03em}
+
+  .choices{display:flex; flex-direction:column; gap:9px; margin-top:18px}
+  .choice{
+    display:flex; gap:11px; align-items:flex-start; text-align:left; width:100%;
+    padding:14px 15px; border-radius:9px; border:1px solid var(--line);
+    background:var(--card); font-size:15px; line-height:1.6; min-height:52px;
+  }
+  .choice__no{
+    font-family:var(--mono); font-size:12px; color:var(--ink-soft);
+    border:1px solid var(--line); border-radius:5px; width:22px; height:22px;
+    display:grid; place-items:center; flex:none; margin-top:2px;
+  }
+  .choice[data-state="correct"]{border-color:var(--ok); background:var(--ok-soft)}
+  .choice[data-state="correct"] .choice__no{border-color:var(--ok); color:var(--ok)}
+  .choice[data-state="wrong"]{border-color:var(--ng); background:var(--ng-soft)}
+  .choice[data-state="wrong"] .choice__no{border-color:var(--ng); color:var(--ng)}
+  .choice[data-state="dim"]{opacity:.42}
+
+  /* ---- 解説（3点セット） ---- */
+  .verdict{display:flex; align-items:center; gap:9px; font-weight:700; font-size:15px; margin:0 0 14px}
+  .verdict--ok{color:var(--ok)}
+  .verdict--ng{color:var(--ng)}
+  .set{display:grid; grid-template-columns:auto 1fr; gap:9px 14px; margin:0}
+  .set dt{font-size:11.5px; color:var(--ink-soft); letter-spacing:.08em; padding-top:4px; white-space:nowrap}
+  .set dd{margin:0; font-size:15px; line-height:1.7}
+  .set dd.is-term{font-family:var(--mincho); font-size:20px; font-weight:600}
+  .set dd.is-abbr{font-family:var(--mono); font-size:13.5px; color:var(--ai-ink)}
+  .pairnote{
+    margin:14px 0 0; padding:11px 13px; border-left:2px solid var(--ai);
+    background:var(--ai-soft); border-radius:0 6px 6px 0; font-size:13.5px; line-height:1.75;
+  }
+  .pairnote b{font-weight:700}
+
+  /* ---- フラッシュカード ---- */
+  .flip{min-height:210px; display:flex; flex-direction:column; justify-content:center; gap:12px; text-align:center; cursor:pointer}
+  .flip__hint{font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-soft)}
+
+  /* ---- 結果 ---- */
+  .score{font-family:var(--mono); font-size:46px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.1}
+  .score small{font-size:17px; color:var(--ink-soft)}
+  .misslist{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
+  .misslist li{padding:11px 0; border-bottom:1px solid var(--line-soft)}
+  .misslist li:last-child{border-bottom:none}
+  .misslist b{font-family:var(--mincho); font-size:16.5px; display:block}
+  .misslist span{font-size:13px; color:var(--ink-soft); display:block; margin-top:2px}
+  .catbar{display:grid; grid-template-columns:1fr auto; gap:4px 12px; align-items:center; font-size:13.5px}
+  .catbar .meter{grid-column:1/-1; height:5px; border-radius:3px; background:var(--line-soft); overflow:hidden; margin-bottom:9px}
+  .catbar .meter i{display:block; height:100%; background:var(--ai)}
+  .catbar .num{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:12.5px; color:var(--ink-soft)}
+
+  /* ---- 下部固定バー ---- */
+  .dock{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:linear-gradient(to top, var(--paper) 62%, transparent);
+    padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+  }
+  .dock__in{max-width:600px; margin:0 auto; display:flex; gap:9px}
+
+  /* ---- タブ ---- */
+  .tabs{display:flex; gap:2px; background:var(--line-soft); padding:2px; border-radius:8px; margin-top:10px}
+  .tabs button{flex:1; padding:8px; border-radius:6px; font-size:13.5px; font-weight:600; color:var(--ink-soft); min-height:38px}
+  .tabs button[aria-selected="true"]{background:var(--card); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+  /* ---- 用語集 ---- */
+  .gtools{margin-bottom:18px}
+  .gsearch{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    background:var(--card); color:var(--ink); font:inherit; font-size:15px; min-height:48px;
+  }
+  .gcount{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin:8px 0 0; letter-spacing:.04em}
+  .toc{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:30px}
+  .toc a{
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    padding:12px 13px; border:1px solid var(--line); border-radius:8px;
+    background:var(--card); text-decoration:none; color:var(--ink); font-size:14px;
+  }
+  .toc a span{font-family:var(--mono); font-size:12px; color:var(--ink-soft); font-variant-numeric:tabular-nums}
+
+  .gcat{margin:0 0 38px; scroll-margin-top:112px}
+  .gcat__h{
+    font-family:var(--mincho); font-size:23px; font-weight:600; letter-spacing:.05em;
+    margin:0; padding-bottom:9px; border-bottom:2px solid var(--ai);
+  }
+  .gcat__n{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin:9px 0 20px; letter-spacing:.05em}
+
+  .ggroup{margin:0 0 24px}
+  .ggroup__h{
+    font-size:13px; font-weight:700; letter-spacing:.07em; color:var(--ai-ink);
+    margin:0 0 9px; display:flex; align-items:center; gap:9px;
+  }
+  .ggroup__h::before{content:""; width:15px; height:2px; background:var(--ai); flex:none}
+  .gnote{margin:0 0 10px; padding:11px 13px; background:var(--ai-soft); border-radius:7px; font-size:13px; line-height:1.75}
+
+  .gterms{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:9px; overflow:hidden; background:var(--card)}
+  .gterm{padding:14px 15px; border-bottom:1px solid var(--line-soft)}
+  .gterm:last-child{border-bottom:none}
+  .gterm__t{
+    font-family:var(--mincho); font-size:18px; font-weight:600; line-height:1.5;
+    display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; margin-bottom:3px;
+  }
+  .gterm__a{font-family:var(--mono); font-size:12.5px; font-weight:400; color:var(--ai-ink); letter-spacing:.02em}
+  .gterm__f{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); font-weight:400}
+  .gterm__d{font-size:14px; line-height:1.8}
+  .gterm.is-weak{background:var(--ng-soft)}
+  .tag-weak{
+    font-family:var(--gothic); font-size:10.5px; font-weight:700; color:var(--ng);
+    border:1px solid var(--ng); border-radius:4px; padding:1px 5px; letter-spacing:.05em;
+  }
+  .gempty{text-align:center; color:var(--ink-soft); padding:48px 0; font-size:14px}
+
+  .totop{
+    position:fixed; right:14px; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:15;
+    width:46px; height:46px; border-radius:50%; background:var(--card);
+    border:1px solid var(--line); box-shadow:var(--shadow); display:grid; place-items:center;
+    font-size:15px; color:var(--ink-soft);
+  }
+
+  @media print{
+    .bar, .dock, .gtools, .toc, .totop{display:none !important}
+    body{background:#fff; color:#000; font-size:11pt}
+    .wrap{max-width:none; padding:0}
+    .gterms{break-inside:avoid; box-shadow:none}
+    .gcat{margin-bottom:20pt}
+  }
+
+  .hidden{display:none !important}
+  .kbd{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:14px; text-align:center}
+  @media (max-width:420px){ .kbd{display:none} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
+
+<div class="bar">
+  <div class="wrap" style="padding-bottom:0">
+    <div class="bar__row">
+      <h1 class="bar__title">SG用語 ドリル</h1>
+      <span class="bar__meta" id="meta">科目A対策</span>
+    </div>
+    <div class="track" id="track"><div class="track__fill" id="fill"></div></div>
+    <div class="tabs" id="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="setup">ドリル</button>
+      <button role="tab" aria-selected="false" data-tab="glossary">用語集</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ 設定 ============ -->
+  <section id="setup" class="stack">
+    <p class="lede">説明文から用語を当てる形式です。まちがえた選択肢は、<b>本番でひっかけに使われやすい似た用語</b>から優先的に選ばれます。</p>
+
+    <div class="card">
+      <h2>これまでの成績</h2>
+      <div class="statgrid">
+        <div><b id="s-seen">0</b><span>のべ出題</span></div>
+        <div><b id="s-rate">—</b><span>正答率</span></div>
+        <div><b id="s-weak">0</b><span>苦手な用語</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>分野をえらぶ</h2>
+      <div class="row" id="cats"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="chip" id="pick-all" aria-pressed="false">すべて</button>
+        <button class="chip" id="pick-weak" aria-pressed="false">苦手だけ</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>問題数</h2>
+      <div class="count-row">
+        <input type="range" id="count" min="5" max="40" step="5" value="15" aria-label="問題数">
+        <output id="count-out">15</output>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>形式</h2>
+      <div class="row">
+        <button class="chip" data-mode="quiz" aria-pressed="true">4択クイズ</button>
+        <button class="chip" data-mode="card" aria-pressed="false">フラッシュカード</button>
+      </div>
+    </div>
+
+    <button class="btn btn--primary btn--wide" id="start">はじめる</button>
+    <p class="kbd">キーボード：1〜4で解答 / Enterで次へ</p>
+  </section>
+
+  <!-- ============ クイズ ============ -->
+  <section id="quiz" class="hidden stack">
+    <div class="card">
+      <p class="qkind" id="q-kind">この説明にあてはまる用語は？</p>
+      <p class="qbody" id="q-body"></p>
+      <div class="choices" id="q-choices"></div>
+    </div>
+    <div class="card hidden" id="explain"></div>
+  </section>
+
+  <!-- ============ フラッシュカード ============ -->
+  <section id="cardview" class="hidden stack">
+    <div class="card flip" id="flip" role="button" tabindex="0" aria-label="カードをめくる">
+      <p class="flip__hint" id="flip-hint">タップでめくる</p>
+      <div id="flip-body"></div>
+    </div>
+  </section>
+
+  <!-- ============ 結果 ============ -->
+  <section id="result" class="hidden stack">
+    <div class="card">
+      <div class="score" id="r-score"></div>
+      <p style="margin:6px 0 0; font-size:14px; color:var(--ink-soft)" id="r-note"></p>
+    </div>
+    <div class="card" id="r-cats-card">
+      <h2>分野別</h2>
+      <div id="r-cats"></div>
+    </div>
+    <div class="card hidden" id="r-miss-card">
+      <h2>まちがえた用語</h2>
+      <ul class="misslist" id="r-miss"></ul>
+    </div>
+  </section>
+
+  <!-- ============ 用語集 ============ -->
+  <section id="glossary" class="hidden">
+    <div class="gtools">
+      <input type="search" class="gsearch" id="gsearch" placeholder="用語・略語・説明から探す" aria-label="用語をさがす">
+      <p class="gcount" id="gcount"></p>
+    </div>
+    <nav class="toc" id="toc" aria-label="分野へ移動"></nav>
+    <div id="glist"></div>
+  </section>
+
+</div>
+
+<button class="totop hidden" id="totop" aria-label="先頭にもどる">↑</button>
+
+<div class="dock hidden" id="dock">
+  <div class="dock__in" id="dock-in"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   用語データ
+   t:用語  a:略語/英字  f:英語フル  d:何をするものか
+   c:分野  g:混同しやすいグループ（誤答の選択肢はここから優先的に選ぶ）
+   ========================================================= */
+const CATS = {
+  law:"法務・制度", risk:"リスク管理", tech:"技術的対策",
+  atk:"攻撃・脅威", auth:"認証・暗号", ops:"運用・監査",
+  sys:"テクノロジ系", mgmt:"マネジメント系", strat:"ストラテジ系"
+};
+
+const TERMS = [
+/* ---------- 法務・制度 ---------- */
+{t:"個人情報",d:"生存する個人を識別できる情報。氏名や生年月日など、他の情報と容易に照合して個人を特定できるものも含む",c:"law",g:"pii"},
+{t:"要配慮個人情報",d:"人種・信条・病歴・犯罪の経歴など、不当な差別につながりうる情報。取得には原則として本人同意が必要",c:"law",g:"pii"},
+{t:"仮名加工情報",d:"他の情報と照合しない限り個人を特定できないよう加工した情報。社内での分析利用を想定した区分",c:"law",g:"pii"},
+{t:"匿名加工情報",d:"個人を特定できず、元の個人情報を復元できないよう加工した情報。本人同意なく第三者提供ができる",c:"law",g:"pii"},
+{t:"不正アクセス禁止法",d:"他人のIDやパスワードを無断で使ってアクセスする行為、およびその助長行為を禁じる法律",c:"law",g:"lawname"},
+{t:"不正競争防止法",d:"営業秘密の不正取得・使用や、他社の商品表示の混同を招く行為などを規制する法律",c:"law",g:"lawname"},
+{t:"サイバーセキュリティ基本法",d:"国のサイバーセキュリティ戦略の基本理念と、国・自治体・事業者の責務を定めた法律",c:"law",g:"lawname"},
+{t:"プロバイダ責任制限法",d:"ネット上の権利侵害について、プロバイダの賠償責任の範囲と発信者情報の開示請求手続を定めた法律",c:"law",g:"lawname"},
+{t:"特定電子メール法",d:"広告宣伝メールの送信に、あらかじめ同意を得ること（オプトイン）などを義務づける法律",c:"law",g:"lawname"},
+{t:"営業秘密",d:"秘密として管理され、有用で、公然と知られていない情報。この3要件をすべて満たす必要がある",c:"law"},
+{t:"電子帳簿保存法",d:"国税関係の帳簿・書類を電子データで保存するための要件を定めた法律",c:"law",g:"lawname"},
+{t:"偽装請負",d:"契約上は請負でありながら、発注者が実際には作業者へ直接指揮命令している状態。労働者派遣法に違反する",c:"law"},
+{t:"ISMS",a:"ISMS",f:"Information Security Management System",d:"組織が情報セキュリティを継続的に管理・改善するための仕組み。PDCAで運用する",c:"law",g:"cert-org"},
+{t:"JIS Q 27001",d:"ISMSの要求事項を定めた規格。認証を取得する際の基準になる",c:"law",g:"cert-org"},
+{t:"JIS Q 27002",d:"情報セキュリティ管理策の実践のための規範。27001の要求を満たす具体的な手引き",c:"law",g:"cert-org"},
+{t:"プライバシーマーク",d:"個人情報を適切に取り扱う体制を整備している事業者に付与される認証制度",c:"law",g:"cert-org"},
+{t:"PCI DSS",a:"PCI DSS",f:"Payment Card Industry Data Security Standard",d:"クレジットカード情報を扱う事業者が守るべき国際的なセキュリティ基準",c:"law",g:"cert-org"},
+{t:"GDPR",a:"GDPR",f:"General Data Protection Regulation",d:"EUの一般データ保護規則。EU域内の個人データを域外へ移転する際の制限などを定める",c:"law",g:"cert-org"},
+{t:"IPA",a:"IPA",f:"Information-technology Promotion Agency",d:"情報処理推進機構。情報処理技術者試験の実施や、脆弱性情報の届出受付を行う",c:"law",g:"org"},
+{t:"JPCERT/CC",a:"JPCERT/CC",d:"国内のインシデント報告を受け付け、対応の調整や注意喚起を行う一般社団法人",c:"law",g:"org"},
+{t:"NISC",a:"NISC",d:"内閣サイバーセキュリティセンター。政府機関のサイバーセキュリティ戦略を統括する",c:"law",g:"org"},
+{t:"CVE",a:"CVE",f:"Common Vulnerabilities and Exposures",d:"個々の脆弱性に一意の識別番号を付ける仕組み。「どの脆弱性か」を指し示す",c:"law",g:"vulndb"},
+{t:"CVSS",a:"CVSS",f:"Common Vulnerability Scoring System",d:"脆弱性の深刻度を共通の基準で点数化する手法。「どれくらい危険か」を測る",c:"law",g:"vulndb"},
+{t:"CWE",a:"CWE",f:"Common Weakness Enumeration",d:"脆弱性の種類を分類した一覧。「どういう種類の弱点か」を示す",c:"law",g:"vulndb"},
+{t:"JVN",a:"JVN",f:"Japan Vulnerability Notes",d:"国内で使われるソフトウェアの脆弱性情報と対策を公開するポータルサイト",c:"law",g:"vulndb"},
+{t:"サイバーセキュリティ経営ガイドライン",d:"経営者が認識すべき3原則と、担当幹部に指示すべき重要10項目をまとめた指針",c:"law"},
+{t:"SECURITY ACTION",d:"中小企業が情報セキュリティ対策に取り組むことを自己宣言する制度。一つ星・二つ星がある",c:"law"},
+
+/* ---------- リスク管理 ---------- */
+{t:"機密性",d:"許可された者だけが情報にアクセスできること。CIAの一つ",c:"risk",g:"cia"},
+{t:"完全性",d:"情報が改ざんされておらず、正確かつ完全であること。CIAの一つ",c:"risk",g:"cia"},
+{t:"可用性",d:"必要なときに情報やシステムを使えること。CIAの一つ",c:"risk",g:"cia"},
+{t:"真正性",d:"利用者や情報が、主張どおり本物であることを確実にする性質",c:"risk",g:"cia"},
+{t:"責任追跡性",d:"誰がいつ何をしたかを、後から追跡できる性質",c:"risk",g:"cia"},
+{t:"否認防止",d:"行った操作をあとから「していない」と否定できないようにする性質",c:"risk",g:"cia"},
+{t:"リスク回避",d:"リスクの原因となる活動そのものをやめる対応。事業の撤退など",c:"risk",g:"riskres"},
+{t:"リスク低減",d:"対策を講じて、発生可能性や影響を小さくする対応",c:"risk",g:"riskres"},
+{t:"リスク移転",d:"保険への加入や業務の外部委託によって、リスクを他者に移す対応",c:"risk",g:"riskres"},
+{t:"リスク保有",d:"影響が小さいなどの理由で、対策せずに受け入れる対応。リスク受容ともいう",c:"risk",g:"riskres"},
+{t:"残留リスク",d:"対策を実施したあとにも、なお残っているリスク",c:"risk"},
+{t:"リスクアセスメント",d:"リスク特定・リスク分析・リスク評価の3つを合わせた一連の活動",c:"risk"},
+{t:"定量的リスク分析",d:"損失額や発生確率を数値で表してリスクを評価する手法",c:"risk",g:"riskana"},
+{t:"定性的リスク分析",d:"大・中・小などの段階でリスクの大きさを評価する手法",c:"risk",g:"riskana"},
+{t:"ALE",a:"ALE",f:"Annualized Loss Expectancy",d:"年間予想損失額。1回あたりの損失額に年間の発生回数を掛けたもの",c:"risk",g:"riskana"},
+{t:"BIA",a:"BIA",f:"Business Impact Analysis",d:"事業影響度分析。業務が停止した場合の影響を分析し、復旧の優先順位を決める",c:"risk",g:"bcp"},
+{t:"RTO",a:"RTO",f:"Recovery Time Objective",d:"目標復旧時間。障害発生から復旧までに、どれだけの時間で戻すかの目標",c:"risk",g:"bcp"},
+{t:"RPO",a:"RPO",f:"Recovery Point Objective",d:"目標復旧時点。どの時点のデータまで戻せればよいかの目標。バックアップ間隔に直結する",c:"risk",g:"bcp"},
+{t:"MTPD",a:"MTPD",f:"Maximum Tolerable Period of Disruption",d:"最大許容停止時間。これ以上止まると事業が立ち行かなくなる限界の時間",c:"risk",g:"bcp"},
+{t:"BCP",a:"BCP",f:"Business Continuity Plan",d:"事業継続計画。災害や障害が起きても事業を継続・早期復旧するための計画",c:"risk",g:"bcp"},
+{t:"MTBF",a:"MTBF",f:"Mean Time Between Failures",d:"平均故障間隔。故障するまで平均どれだけ動き続けるか。信頼性の指標",c:"risk",g:"rel"},
+{t:"MTTR",a:"MTTR",f:"Mean Time To Repair",d:"平均修復時間。故障してから直るまで平均どれだけかかるか。保守性の指標",c:"risk",g:"rel"},
+{t:"稼働率",d:"MTBF÷(MTBF+MTTR)で求める、システムが使える状態の割合",c:"risk",g:"rel"},
+{t:"SLA",a:"SLA",f:"Service Level Agreement",d:"サービス提供者と利用者の間で、稼働率や応答時間などの水準を取り決めた合意",c:"risk",g:"sla"},
+{t:"SLM",a:"SLM",f:"Service Level Management",d:"SLAで定めた水準を維持・改善するために、測定と見直しを継続する管理活動",c:"risk",g:"sla"},
+{t:"情報資産台帳",d:"組織が保有する情報資産を洗い出し、重要度や管理者を記録した一覧",c:"risk"},
+{t:"職務分掌",d:"一人の担当者に権限が集中しないよう、業務と権限を複数人に分ける管理策",c:"risk",g:"actrl"},
+{t:"最小権限の原則",d:"業務に必要な最低限の権限だけを与えるという考え方",c:"risk",g:"actrl"},
+{t:"知る必要性",d:"業務上その情報を知る必要がある者だけに開示するという原則。Need-to-know",c:"risk",g:"actrl"},
+{t:"ジョブローテーション",d:"担当者を定期的に交代させ、不正の発見と属人化の防止を図る管理策",c:"risk",g:"actrl"},
+
+/* ---------- 技術的対策 ---------- */
+{t:"ファイアウォール",d:"通信の送信元・宛先・ポート番号などをもとに、通過させるかどうかを制御する仕組み",c:"tech",g:"nwdef"},
+{t:"WAF",a:"WAF",f:"Web Application Firewall",d:"Webアプリへの通信内容を検査し、SQLインジェクションなどの攻撃を防ぐ仕組み",c:"tech",g:"nwdef"},
+{t:"IDS",a:"IDS",f:"Intrusion Detection System",d:"不正な通信や侵入を検知して管理者に知らせる。検知するだけで遮断はしない",c:"tech",g:"nwdef"},
+{t:"IPS",a:"IPS",f:"Intrusion Prevention System",d:"不正な通信を検知したうえで、その通信を遮断まで行う",c:"tech",g:"nwdef"},
+{t:"DMZ",a:"DMZ",f:"DeMilitarized Zone",d:"外部に公開するサーバを置く、内部ネットワークから分離された区画",c:"tech",g:"nwdef"},
+{t:"EDR",a:"EDR",f:"Endpoint Detection and Response",d:"PCやサーバ上の不審な挙動を監視・記録し、侵入後の対応を支援する仕組み",c:"tech",g:"detect"},
+{t:"SIEM",a:"SIEM",f:"Security Information and Event Management",d:"複数の機器のログを集約して相関分析し、異常をリアルタイムに検知する仕組み",c:"tech",g:"detect"},
+{t:"DLP",a:"DLP",f:"Data Loss Prevention",d:"機密データの中身を監視し、外部への持ち出しや送信を検知・防止する仕組み",c:"tech",g:"detect"},
+{t:"サンドボックス",d:"隔離された仮想環境で不審なファイルを実行し、挙動を観察して安全性を判定する",c:"tech",g:"detect"},
+{t:"VPN",a:"VPN",f:"Virtual Private Network",d:"公衆回線上に暗号化された仮想的な専用線を作り、安全に通信する技術",c:"tech"},
+{t:"ゼロトラスト",d:"社内ネットワークだからと信用せず、すべてのアクセスを都度検証するという考え方",c:"tech"},
+{t:"MDM",a:"MDM",f:"Mobile Device Management",d:"スマートフォンなどの端末を一元管理し、紛失時の遠隔ロックやワイプを行う仕組み",c:"tech"},
+{t:"ペネトレーションテスト",d:"実際に攻撃を試みて、システムに侵入できるかどうかを検証するテスト",c:"tech",g:"test"},
+{t:"脆弱性診断",d:"既知の脆弱性が存在しないかを網羅的に洗い出す検査",c:"tech",g:"test"},
+{t:"ファジング",d:"想定外のデータを大量に送り込み、異常終了などの不具合を見つける検査手法",c:"tech",g:"test"},
+{t:"フルバックアップ",d:"対象データのすべてを毎回まるごと複製する方式。復旧は速いが時間と容量を要する",c:"tech",g:"backup"},
+{t:"差分バックアップ",d:"直前のフルバックアップ以降に変更された分を複製する方式。復旧はフル＋最新の差分",c:"tech",g:"backup"},
+{t:"増分バックアップ",d:"前回のバックアップ以降に変更された分だけを複製する方式。取得は速いが復旧に手間がかかる",c:"tech",g:"backup"},
+{t:"WPA3",d:"無線LANの暗号化規格。WPA2の弱点を改善した最新世代",c:"tech",g:"wifi"},
+{t:"SSID",a:"SSID",d:"無線LANのアクセスポイントを識別する名前。隠す設定（ステルス）は補助的な対策にすぎない",c:"tech",g:"wifi"},
+{t:"MACアドレスフィルタリング",d:"登録された機器のMACアドレスだけ接続を許可する方式。偽装が可能なため単独では不十分",c:"tech",g:"wifi"},
+{t:"電子透かし",d:"画像や音声に、見た目を損なわずに著作権情報などを埋め込む技術",c:"tech",g:"hide"},
+{t:"ステガノグラフィ",d:"データの中に別の情報を隠し、そもそも情報が存在すること自体を秘匿する技術",c:"tech",g:"hide"},
+
+/* ---------- 攻撃・脅威 ---------- */
+{t:"SQLインジェクション",d:"入力欄に不正なSQL文を混ぜ込み、データベースを不正に操作・窃取する攻撃",c:"atk",g:"web"},
+{t:"クロスサイトスクリプティング",a:"XSS",d:"Webページに悪意のあるスクリプトを埋め込み、閲覧者のブラウザ上で実行させる攻撃",c:"atk",g:"web"},
+{t:"クロスサイトリクエストフォージェリ",a:"CSRF",d:"ログイン中の利用者に、意図しない操作のリクエストを送信させる攻撃",c:"atk",g:"web"},
+{t:"ディレクトリトラバーサル",d:"ファイル名の指定を細工し、公開範囲外のファイルを不正に読み出す攻撃",c:"atk",g:"web"},
+{t:"OSコマンドインジェクション",d:"入力値にOSのコマンドを紛れ込ませ、サーバ上で不正に実行させる攻撃",c:"atk",g:"web"},
+{t:"クリックジャッキング",d:"透明な要素を重ねて、利用者に意図しないボタンをクリックさせる攻撃",c:"atk",g:"web"},
+{t:"セッションハイジャック",d:"利用者のセッションIDを盗み、その人になりすまして操作する攻撃",c:"atk",g:"web"},
+{t:"DoS攻撃",a:"DoS",d:"大量のリクエストを送りつけ、サービスを提供できない状態に追い込む攻撃",c:"atk",g:"dos"},
+{t:"DDoS攻撃",a:"DDoS",d:"多数の乗っ取られた機器から一斉にDoS攻撃を仕掛ける攻撃",c:"atk",g:"dos"},
+{t:"DNSアンプ攻撃",d:"送信元を偽ってDNSに問い合わせ、増幅された応答を標的に集中させる攻撃",c:"atk",g:"dos"},
+{t:"DNSキャッシュポイズニング",d:"DNSサーバに偽の情報を覚え込ませ、利用者を偽サイトへ誘導する攻撃",c:"atk",g:"dos"},
+{t:"標的型攻撃",d:"特定の組織を狙い、業務を装ったメールなどで長期間かけて侵入する攻撃",c:"atk",g:"target"},
+{t:"水飲み場型攻撃",d:"標的がよく閲覧するWebサイトを改ざんし、訪問時にマルウェアへ感染させる攻撃",c:"atk",g:"target"},
+{t:"やり取り型攻撃",d:"問い合わせを装って何度かメールを往復し、信用させてから不正な添付を送る攻撃",c:"atk",g:"target"},
+{t:"ビジネスメール詐欺",a:"BEC",f:"Business Email Compromise",d:"経営者や取引先になりすまし、偽の口座へ送金させる詐欺",c:"atk",g:"target"},
+{t:"フィッシング",d:"本物そっくりの偽サイトへ誘導し、IDやパスワードを入力させて盗む手口",c:"atk",g:"social"},
+{t:"ソーシャルエンジニアリング",d:"技術ではなく人の心理や行動の隙を突いて情報を盗み出す手口の総称",c:"atk",g:"social"},
+{t:"ショルダーハッキング",d:"背後から画面やキーボードをのぞき見て、情報を盗み取る手口",c:"atk",g:"social"},
+{t:"トラッシング",d:"ごみ箱に捨てられた書類や記録媒体をあさって情報を得る手口。スカベンジングともいう",c:"atk",g:"social"},
+{t:"ランサムウェア",d:"データを暗号化して使えなくし、復旧と引き換えに金銭を要求するマルウェア",c:"atk",g:"mal"},
+{t:"ワーム",d:"他のプログラムに寄生せず、自分自身を複製してネットワーク上に広がるマルウェア",c:"atk",g:"mal"},
+{t:"トロイの木馬",d:"有用なソフトウェアを装って侵入し、内部で不正な動作を行うマルウェア",c:"atk",g:"mal"},
+{t:"ルートキット",d:"侵入の痕跡やマルウェアの存在を隠蔽し、発見を困難にするツール群",c:"atk",g:"mal"},
+{t:"バックドア",d:"正規の認証を経ずに侵入できるよう、ひそかに仕込まれた裏口",c:"atk",g:"mal"},
+{t:"キーロガー",d:"キーボードの入力内容を記録し、パスワードなどを盗み取るソフトや機器",c:"atk",g:"mal"},
+{t:"ボットネット",d:"乗っ取られた多数の機器がC&Cサーバの指令で動く、攻撃者の支配下のネットワーク",c:"atk",g:"mal"},
+{t:"ゼロデイ攻撃",d:"修正プログラムが提供される前の脆弱性を突く攻撃",c:"atk"},
+{t:"サプライチェーン攻撃",d:"取引先や委託先など、警戒の薄い関係組織を踏み台にして標的へ侵入する攻撃",c:"atk"},
+{t:"総当たり攻撃",d:"考えられる文字の組合せをすべて試してパスワードを破る攻撃。ブルートフォース",c:"atk",g:"pw"},
+{t:"辞書攻撃",d:"辞書にある単語やよく使われる文字列を順に試してパスワードを破る攻撃",c:"atk",g:"pw"},
+{t:"パスワードリスト攻撃",d:"他所から漏えいしたIDとパスワードの組を使い回して、別のサイトへ不正ログインする攻撃",c:"atk",g:"pw"},
+{t:"リバースブルートフォース攻撃",d:"パスワードを固定してIDのほうを次々変える攻撃。アカウントロックを回避できる",c:"atk",g:"pw"},
+{t:"レインボーテーブル攻撃",d:"ハッシュ値と元の文字列の対応表を使い、ハッシュから元のパスワードを高速に割り出す攻撃",c:"atk",g:"pw"},
+{t:"中間者攻撃",a:"MITM",f:"Man-In-The-Middle",d:"通信する二者の間に割り込み、内容を盗聴・改ざんする攻撃",c:"atk"},
+{t:"サイドチャネル攻撃",d:"処理時間や消費電力など、装置の物理的な観測から暗号鍵などを推測する攻撃",c:"atk"},
+{t:"ドライブバイダウンロード",d:"改ざんされたサイトを閲覧しただけで、気づかぬうちにマルウェアを取り込ませる攻撃",c:"atk"},
+
+/* ---------- 認証・暗号 ---------- */
+{t:"認証",d:"相手が本人であることを確かめること。「誰か」を確認する",c:"auth",g:"authnz"},
+{t:"認可",d:"認証された相手に、何をしてよいかの権限を与えること。「何ができるか」を決める",c:"auth",g:"authnz"},
+{t:"多要素認証",a:"MFA",f:"Multi-Factor Authentication",d:"知識・所持・生体のうち、種類の異なる2つ以上を組み合わせる認証",c:"auth",g:"mfa"},
+{t:"二段階認証",d:"認証を2回に分けて行うこと。同じ種類の要素を2回使う場合は多要素にはあたらない",c:"auth",g:"mfa"},
+{t:"ワンタイムパスワード",a:"OTP",d:"一度きりしか使えない使い捨てのパスワード。盗まれても再利用できない",c:"auth",g:"mfa"},
+{t:"チャレンジレスポンス認証",d:"サーバから送られた乱数をもとに計算した値を返す方式。パスワードそのものは流れない",c:"auth",g:"mfa"},
+{t:"リスクベース認証",d:"普段と異なる端末や場所からのアクセスを検知したときだけ、追加の認証を求める方式",c:"auth",g:"mfa"},
+{t:"シングルサインオン",a:"SSO",f:"Single Sign-On",d:"一度の認証で、複数のサービスを続けて利用できるようにする仕組み",c:"auth",g:"fed"},
+{t:"SAML",a:"SAML",d:"組織をまたいで認証情報を安全にやりとりするためのXMLベースの規格。SSOで使われる",c:"auth",g:"fed"},
+{t:"OAuth",a:"OAuth",d:"パスワードを渡さずに、他サービスへ限定的な権限を委譲するための仕組み。認可の規格",c:"auth",g:"fed"},
+{t:"FIDO",a:"FIDO",d:"パスワードを使わず、生体情報や端末の鍵で認証する規格。認証情報が外部に出ない",c:"auth",g:"fed"},
+{t:"本人拒否率",a:"FRR",f:"False Rejection Rate",d:"生体認証で、本人なのに拒否してしまう割合。厳しくすると上がる",c:"auth",g:"bio"},
+{t:"他人受入率",a:"FAR",f:"False Acceptance Rate",d:"生体認証で、他人なのに受け入れてしまう割合。緩くすると上がる",c:"auth",g:"bio"},
+{t:"共通鍵暗号",d:"暗号化と復号に同じ鍵を使う方式。処理が速いが、鍵を安全に渡す方法が課題になる",c:"auth",g:"crypto"},
+{t:"公開鍵暗号",d:"公開鍵で暗号化し、対になる秘密鍵で復号する方式。鍵の配送問題が起きない",c:"auth",g:"crypto"},
+{t:"ハイブリッド暗号",d:"データ本体は共通鍵で、その共通鍵を公開鍵で暗号化して送る方式。速さと安全性を両立する",c:"auth",g:"crypto"},
+{t:"ディジタル署名",d:"送信者の秘密鍵で署名し、受信者が公開鍵で検証する。改ざん検知と否認防止のための仕組み",c:"auth",g:"crypto"},
+{t:"ハッシュ関数",d:"任意の長さのデータから固定長の値を求める。元に戻せず、わずかな変化で値が大きく変わる",c:"auth",g:"crypto"},
+{t:"ソルト",d:"パスワードのハッシュ化の際に付加するランダムな文字列。レインボーテーブル攻撃を防ぐ",c:"auth",g:"crypto"},
+{t:"PKI",a:"PKI",f:"Public Key Infrastructure",d:"公開鍵が本物であることを、認証局を通じて保証する社会基盤",c:"auth",g:"pki"},
+{t:"認証局",a:"CA",f:"Certification Authority",d:"公開鍵の持ち主を確認し、ディジタル証明書を発行する第三者機関",c:"auth",g:"pki"},
+{t:"ディジタル証明書",d:"公開鍵とその持ち主の情報を、認証局が署名して保証する電子的な証明書",c:"auth",g:"pki"},
+{t:"CRL",a:"CRL",f:"Certificate Revocation List",d:"有効期限内に失効させられた証明書の一覧。まとめて配布して確認する",c:"auth",g:"pki"},
+{t:"OCSP",a:"OCSP",d:"証明書が失効していないかを、その都度オンラインで問い合わせて確認する仕組み",c:"auth",g:"pki"},
+{t:"SPF",a:"SPF",f:"Sender Policy Framework",d:"送信元のIPアドレスが、そのドメインの正規の送信サーバかをDNSで検証する",c:"auth",g:"mail"},
+{t:"DKIM",a:"DKIM",f:"DomainKeys Identified Mail",d:"メールに電子署名を付け、受信側が公開鍵で検証する。改ざんも検知できる",c:"auth",g:"mail"},
+{t:"DMARC",a:"DMARC",d:"SPFとDKIMの検証結果をふまえ、認証に失敗したメールをどう扱うかの方針を宣言する",c:"auth",g:"mail"},
+{t:"S/MIME",a:"S/MIME",d:"電子メールの本文を暗号化し、ディジタル署名を付けるための規格",c:"auth",g:"mail"},
+{t:"タイムスタンプ",d:"その時刻にその文書が存在し、以後改ざんされていないことを証明する仕組み",c:"auth"},
+
+/* ---------- 運用・監査 ---------- */
+{t:"CSIRT",a:"CSIRT",f:"Computer Security Incident Response Team",d:"インシデント発生時に対応する専門チーム。「起きたあと」に動く",c:"ops",g:"team"},
+{t:"SOC",a:"SOC",f:"Security Operation Center",d:"ログや通信を常時監視し、脅威を検知する組織。「起きる前・起きた瞬間」を見張る",c:"ops",g:"team"},
+{t:"ディジタルフォレンジックス",d:"インシデントの原因究明のため、電子的な証拠を保全・収集・分析すること",c:"ops",g:"ir"},
+{t:"証拠保全",d:"改変されないよう証拠を確保すること。取得手順と受け渡しの記録が求められる",c:"ops",g:"ir"},
+{t:"封じ込め",d:"インシデント対応で、被害の拡大を止める段階。ネットワークからの隔離など",c:"ops",g:"ir"},
+{t:"エスカレーション",d:"自分で判断・対応できない事象を、上位の責任者や専門部署へ引き継ぐこと",c:"ops",g:"ir"},
+{t:"パッチマネジメント",d:"修正プログラムの適用状況を把握し、計画的に更新を行う管理活動",c:"ops",g:"opsmgmt"},
+{t:"変更管理",d:"システムへの変更を、申請・承認・記録の手順に沿って統制する活動",c:"ops",g:"opsmgmt"},
+{t:"構成管理",d:"機器やソフトウェアの構成情報を正確に把握し、最新の状態に保つ活動",c:"ops",g:"opsmgmt"},
+{t:"監査証跡",d:"誰がいつ何をしたかを後から追跡できるように残された記録",c:"ops",g:"audit"},
+{t:"内部監査",d:"組織自身が、自組織の運用が基準どおりかを確かめる監査",c:"ops",g:"audit"},
+{t:"システム監査",d:"独立した第三者が、情報システムの信頼性・安全性・効率性を点検・評価すること",c:"ops",g:"audit"},
+{t:"監査証拠",d:"監査人が意見を裏づけるために収集する、客観的な事実や記録",c:"ops",g:"audit"},
+{t:"クリアデスク",d:"離席・退社時に書類や記録媒体を机上に放置しないという運用ルール",c:"ops",g:"phys"},
+{t:"クリアスクリーン",d:"離席時に画面をロックし、内容を見られないようにする運用ルール",c:"ops",g:"phys"},
+{t:"共連れ",d:"認証した人のすぐ後ろについて、認証せずに入室してしまう行為。テールゲーティング",c:"ops",g:"phys"},
+{t:"アンチパスバック",d:"入室記録のない者の退室を認めない制御。共連れの防止に用いる",c:"ops",g:"phys"},
+{t:"セキュリティゾーニング",d:"重要度に応じて区画を分け、区画ごとに入退室の管理水準を変える考え方",c:"ops",g:"phys"},
+{t:"消磁",d:"強い磁界をかけて磁気記録を破壊し、データを復元不能にする廃棄方法",c:"ops",g:"disposal"},
+{t:"データ抹消ソフト",d:"記憶媒体に無意味なデータを上書きして、元の内容を復元できなくするソフト",c:"ops",g:"disposal"},
+{t:"委託先管理",d:"外部に業務を委託する際、契約や監査を通じて委託先の管理水準を確保すること",c:"ops"},
+{t:"標的型攻撃メール訓練",d:"従業員へ模擬の攻撃メールを送り、開封率などから対応力を測る教育施策",c:"ops"},
+{t:"内部不正防止ガイドライン",d:"IPAが公開する、従業員などによる内部不正を防ぐための管理策をまとめた指針",c:"ops"},
+
+/* ===== ここから ファイナルチェックシート（テキスト巻末）より追加 ===== */
+
+/* -- 第1章 サイバー攻撃手法 -- */
+{t:"ハッカー",d:"コンピュータや技術に深い知識を持つ人。本来は悪い意味ではない",c:"atk",g:"hacker"},
+{t:"クラッカー",d:"高い技術を悪用して、不正侵入や破壊を行う者",c:"atk",g:"hacker"},
+{t:"スクリプトキディ",d:"既存の攻撃ツールを使うだけで、技術的な知識に乏しい攻撃者",c:"atk",g:"hacker"},
+{t:"ダウンローダ",d:"感染後、インターネットから本体のマルウェアを追加で取り込む役割のもの",c:"atk",g:"mal"},
+{t:"ドロッパ",d:"自分の中にあらかじめ隠し持ったマルウェアを、感染先に置いて実行させるもの",c:"atk",g:"mal"},
+{t:"スパイウェア",d:"利用者に気づかれないよう情報を収集し、外部へ送信するソフト",c:"atk",g:"mal2"},
+{t:"アドウェア",d:"広告を強制的に表示するソフト。情報収集を伴うものもある",c:"atk",g:"mal2"},
+{t:"偽セキュリティ対策ソフト型ウイルス",d:"「感染しています」と偽の警告を出し、有償版の購入や入力を促すウイルス",c:"atk",g:"virus"},
+{t:"遠隔操作型ウイルス",d:"感染した端末を、攻撃者が外部から自由に操作できるようにするウイルス",c:"atk",g:"virus"},
+{t:"ポリモーフィック型ウイルス",d:"感染のたびに自身のコードを変化させ、パターン検出から逃れるウイルス",c:"atk",g:"virus"},
+{t:"フットプリンティング",d:"攻撃の前段階として、標的の公開情報を幅広く調べる下調べ",c:"atk",g:"recon"},
+{t:"フィンガプリント",d:"応答の特徴から、OSやソフトの種類・バージョンを推定すること",c:"atk",g:"recon"},
+{t:"ポートスキャン",d:"どのポートが開いているかを調べ、侵入口を探す行為",c:"atk",g:"recon"},
+{t:"ウォードライビング",d:"車で移動しながら、セキュリティの弱い無線LANを探し出す行為",c:"atk",g:"recon"},
+{t:"ダークウェブ",d:"特殊なソフトでしか閲覧できない匿名性の高いWeb。不正な売買の場になる",c:"atk",g:"dark"},
+{t:"ダークネット",d:"宛先として使われていないIPアドレスの空間。観測すると攻撃の兆候が分かる",c:"atk",g:"dark"},
+{t:"テンペスト攻撃",d:"機器から漏れる電磁波を傍受し、画面の表示内容などを盗み見る攻撃",c:"atk",g:"emi"},
+{t:"踏み台",d:"攻撃者が身元を隠すために、間に挟んで悪用する第三者のコンピュータ",c:"atk",g:"relay"},
+{t:"第三者中継",d:"外部からのメールを無関係な宛先へ転送してしまうメールサーバの設定不備",c:"atk",g:"relay"},
+{t:"IPスプーフィング",d:"送信元のIPアドレスを偽装して、なりすましや追跡回避を行う攻撃",c:"atk",g:"spoof"},
+{t:"スニッフィング",d:"ネットワークを流れるパケットを盗聴し、IDやパスワードを盗み取る行為",c:"atk",g:"spoof"},
+{t:"セッション固定攻撃",d:"攻撃者が用意したセッションIDを利用者に使わせ、あとから乗っ取る攻撃",c:"atk",g:"session"},
+{t:"ドメイン名ハイジャック",d:"ドメインの登録情報を不正に書き換え、正規のドメインを乗っ取る攻撃",c:"atk",g:"session"},
+{t:"クリプトジャッキング",d:"他人の端末を無断で使い、暗号資産のマイニングを行わせる攻撃",c:"atk",g:"jack"},
+{t:"スミッシング",a:"SMiShing",d:"SMSを使ったフィッシング。偽のショートメッセージから偽サイトへ誘導する",c:"atk",g:"social"},
+{t:"ファーミング",d:"DNSなどを改ざんし、正しいURLを入力しても偽サイトへ誘導する攻撃",c:"atk",g:"social"},
+{t:"SEOポイズニング",d:"検索結果の上位に不正なサイトを表示させ、閲覧者を誘い込む攻撃",c:"atk",g:"dos"},
+{t:"ディレクトリリスティング",d:"設定不備により、ディレクトリ内のファイル一覧が見えてしまう状態",c:"atk",g:"web"},
+{t:"迷惑メール",d:"受信者の意図に関係なく無差別に大量送信されるメール。スパムメール",c:"atk",g:"mailatk"},
+{t:"標的型攻撃メール",d:"特定の相手に合わせて業務を装い、開かせることを狙って送るメール",c:"atk",g:"mailatk"},
+
+/* -- 入力値の対策 -- */
+{t:"エスケープ処理",d:"特別な意味を持つ記号を、無害な文字に置き換えてから処理すること",c:"tech",g:"escape"},
+{t:"サニタイジング",d:"入力値から危険な文字列を取り除く、または無害化すること",c:"tech",g:"escape"},
+{t:"プレースホルダ",d:"SQL文の値の部分を記号で確保しておき、後から値を当てはめる方式。構造的に防ぐ",c:"tech",g:"escape"},
+
+/* -- 第2章 暗号と認証 -- */
+{t:"DES",a:"DES",d:"古い共通鍵暗号方式。鍵長が短く、現在は安全性が不十分",c:"auth",g:"algo"},
+{t:"AES",a:"AES",d:"現在広く使われている共通鍵暗号方式。DESの後継",c:"auth",g:"algo"},
+{t:"RSA",a:"RSA",d:"代表的な公開鍵暗号方式。大きな数の素因数分解の難しさを利用する",c:"auth",g:"algo"},
+{t:"メッセージ認証符号",a:"MAC",d:"共通鍵を使って作る検証用の値。改ざん検知に加え、相手が鍵を持つことも確認できる",c:"auth",g:"mac"},
+{t:"メッセージダイジェスト",d:"ハッシュ関数で求めた固定長の値そのもの。鍵は使わない",c:"auth",g:"mac"},
+{t:"多層防御",d:"対策を何段階も重ね、ひとつ破られても次で止める考え方。認証の話ではない",c:"auth",g:"mfa"},
+{t:"ゼロ知識証明",d:"秘密の情報そのものを明かさずに、それを知っていることだけを証明する方式",c:"auth",g:"zero"},
+
+/* -- 第3章 情報セキュリティ管理 -- */
+{t:"トップマネジメント",d:"組織を指揮・管理する最高位の人や集団。経営層という「人」を指す",c:"risk",g:"top"},
+{t:"トップダウン",d:"上位から下位へ方針を示して進める「やり方」を指す",c:"risk",g:"top"},
+{t:"基本方針",d:"情報セキュリティポリシの最上位。組織の理念と方針を示す",c:"risk",g:"policy"},
+{t:"対策基準",d:"基本方針を実現するために、守るべき統一的な基準を示したもの",c:"risk",g:"policy"},
+{t:"実施手順",d:"対策基準を実務で行うための、具体的な手順書やマニュアル",c:"risk",g:"policy"},
+{t:"リスク選好",d:"組織が進んで取ろうとするリスクの度合い",c:"risk",g:"appetite"},
+{t:"リスク忌避",d:"リスクを取ることを避けようとする姿勢",c:"risk",g:"appetite"},
+{t:"リスクマネジメント",d:"リスクを管理する活動の全体。アセスメントと対応の両方を含む",c:"risk",g:"rm"},
+{t:"リスク分析",d:"特定したリスクの発生可能性と影響の大きさを見積もる工程",c:"risk",g:"rm"},
+{t:"リスク評価",d:"分析結果をリスク基準と照らし、対応の要否と優先順位を決める工程",c:"risk",g:"rm"},
+{t:"リスク受容",d:"評価したリスクを、対応せずに受け入れると決めること",c:"risk",g:"riskres"},
+{t:"情報セキュリティ事象",d:"セキュリティに関係する、まだ被害と断定できない段階の出来事",c:"ops",g:"incident"},
+{t:"情報セキュリティインシデント",d:"事業を危うくする可能性が高い、望ましくない事象。対応が必要な段階",c:"ops",g:"incident"},
+{t:"自己点検",d:"担当者自身が、決められた基準どおりに運用できているかを確かめること",c:"ops",g:"selfcheck"},
+{t:"CSA",a:"CSA",f:"Control Self Assessment",d:"統制自己評価。業務を行う部署自身が、統制の有効性を評価する手法",c:"ops",g:"selfcheck"},
+{t:"J-CRAT",a:"J-CRAT",d:"サイバーレスキュー隊。標的型攻撃を受けた組織の被害拡大を防ぐ支援を行う",c:"law",g:"org"},
+{t:"J-CSIP",a:"J-CSIP",d:"サイバー情報共有イニシアティブ。参加組織の間で攻撃情報を共有する枠組み",c:"law",g:"org"},
+{t:"ISAC",a:"ISAC",d:"業界ごとに脅威情報を共有・分析する組織",c:"law",g:"org"},
+
+/* -- 第4章 情報セキュリティ対策 -- */
+{t:"入口対策",d:"外部からの侵入を、境界で防ぐ対策。ファイアウォールなど",c:"tech",g:"gate"},
+{t:"内部対策",d:"侵入されたあと、内部での感染拡大や探索を検知・抑止する対策",c:"tech",g:"gate"},
+{t:"出口対策",d:"情報が外部へ持ち出されるのを防ぐ対策。不審な通信の遮断など",c:"tech",g:"gate"},
+{t:"SMTP-AUTH",a:"SMTP-AUTH",d:"メール送信時に利用者認証を行い、正規の利用者にだけ送信を許可する仕組み",c:"tech",g:"smtp"},
+{t:"POP before SMTP",d:"先に受信の認証を済ませた利用者にだけ、一定時間送信を許可する古い方式",c:"tech",g:"smtp"},
+{t:"OP25B",a:"OP25B",f:"Outbound Port 25 Blocking",d:"ISPが自網から外部への25番ポート通信を遮断し、迷惑メールの送信を防ぐ",c:"tech",g:"smtp"},
+{t:"URLフィルタリング",d:"アクセス先のURLをもとに、閲覧を許可・遮断する仕組み",c:"tech",g:"filter"},
+{t:"コンテンツフィルタリング",d:"ページの中身を判定して、閲覧を許可・遮断する仕組み",c:"tech",g:"filter"},
+{t:"パケットフィルタリング",d:"IPアドレスやポート番号をもとに、通信の通過可否を判断する仕組み",c:"tech",g:"filter"},
+
+/* -- 第5章 情報セキュリティ製品 -- */
+{t:"インターネットVPN",d:"インターネット上に暗号化した仮想の専用線を作る方式。安価だが品質は保証されない",c:"tech",g:"vpntype"},
+{t:"IP-VPN",a:"IP-VPN",d:"通信事業者の閉じた網を使うVPN。品質が保証されるが費用は高い",c:"tech",g:"vpntype"},
+{t:"プロキシサーバ",d:"内部の利用者に代わって、外部へアクセスする中継サーバ",c:"tech",g:"proxy"},
+{t:"リバースプロキシサーバ",d:"外部からの要求を受け、内部のサーバに代わって応答する中継サーバ",c:"tech",g:"proxy"},
+{t:"シャドーIT",d:"会社が把握・許可していない機器やサービスを、従業員が業務で使っている状態",c:"tech",g:"shadow"},
+{t:"サンクションIT",d:"会社が正式に認め、管理下に置いている機器やサービス",c:"tech",g:"shadow"},
+
+/* -- 第6章 セキュリティ関連法規 -- */
+{t:"IT基本法",d:"高度情報通信ネットワーク社会の形成を目的とした基本法。セキュリティ専門の法ではない",c:"law",g:"lawname"},
+{t:"オプトイン方式",d:"あらかじめ同意を得た人にだけ送信してよい、という方式",c:"law",g:"opt"},
+{t:"オプトアウト方式",d:"拒否の意思を示した人には送らない、という方式",c:"law",g:"opt"},
+{t:"特定個人情報",d:"マイナンバー（個人番号）を含む個人情報。通常より厳しい取扱いが求められる",c:"law",g:"pii"},
+{t:"個人識別符号",d:"それ単体で個人を識別できる符号。指紋データや旅券番号など",c:"law",g:"pii"},
+{t:"個人番号",d:"マイナンバー。住民票を持つ一人ひとりに割り当てられる12桁の番号",c:"law",g:"pii"},
+{t:"e-文書法",d:"法令で保存が義務づけられた文書を、電子データで保存することを認める法律",c:"law",g:"edoc"},
+{t:"派遣契約",d:"派遣先が労働者に直接指揮命令できる契約",c:"law",g:"contract"},
+{t:"請負契約",d:"仕事の完成を約束する契約。発注者は作業者に指揮命令できない",c:"law",g:"contract"},
+{t:"準委任契約",d:"業務の遂行を約束する契約。完成の義務はなく、指揮命令もできない",c:"law",g:"contract"},
+{t:"出向契約",d:"出向元に籍を残したまま、出向先と雇用関係を結んで働く形態",c:"law",g:"contract"},
+
+/* -- 第7章 テクノロジ系 -- */
+{t:"デュアルシステム",d:"同じ処理を2系統で同時に行い、結果を照合する方式。信頼性は高いが高価",c:"sys",g:"dual"},
+{t:"デュプレックスシステム",d:"主系と待機系を用意し、障害時に待機系へ切り替える方式",c:"sys",g:"dual"},
+{t:"ホットスタンバイ",d:"待機系を常に起動させておき、即座に切り替えられる状態",c:"sys",g:"standby"},
+{t:"ウォームスタンバイ",d:"待機系を起動はしておくが、切替には多少の準備が必要な状態",c:"sys",g:"standby"},
+{t:"コールドスタンバイ",d:"待機系を停止させておき、障害時に起動して切り替える状態",c:"sys",g:"standby"},
+{t:"フォールトアボイダンス",d:"故障そのものが起きないよう、品質を高めて未然に防ぐ考え方",c:"sys",g:"fault"},
+{t:"フォールトトレランス",d:"故障が起きても、機能を保ち続けられるようにする考え方",c:"sys",g:"fault"},
+{t:"フェールセーフ",d:"故障したとき、安全な側へ倒れるように設計する考え方",c:"sys",g:"fault"},
+{t:"フェールソフト",d:"故障したとき、機能を落としてでも動作を続ける考え方",c:"sys",g:"fault"},
+{t:"フールプルーフ",d:"利用者が誤った操作をしても、問題が起きないように設計する考え方",c:"sys",g:"fault"},
+{t:"レスポンスタイム",d:"要求を出し終えてから、最初の応答が返り始めるまでの時間",c:"sys",g:"perf"},
+{t:"ターンアラウンドタイム",d:"要求を出し始めてから、すべての結果を受け取り終えるまでの時間",c:"sys",g:"perf"},
+{t:"スループット",d:"単位時間あたりに処理できる仕事の量",c:"sys",g:"perf"},
+{t:"ロールバック",d:"障害時に、更新前ログを使って処理を始める前の状態へ戻すこと",c:"sys",g:"recover"},
+{t:"ロールフォワード",d:"バックアップから復元したあと、更新後ログを使って障害の直前まで進めること",c:"sys",g:"recover"},
+{t:"データウェアハウス",d:"分析のために、業務データを時系列でまとめて蓄積した大規模なデータベース",c:"sys",g:"data"},
+{t:"データマート",d:"データウェアハウスから、特定の部門や目的に絞って切り出した小規模なもの",c:"sys",g:"data"},
+{t:"データマイニング",d:"大量のデータを分析し、気づかれていなかった規則や関係を見つけ出すこと",c:"sys",g:"data"},
+{t:"ビッグデータ",d:"量・速度・多様性の面で、従来の手法では扱いきれない大量のデータ",c:"sys",g:"data"},
+{t:"ゲートウェイ",d:"プロトコルが異なるネットワーク同士を接続する機器",c:"sys",g:"nwdev"},
+{t:"ルータ",d:"IPアドレスを見て経路を選び、パケットを転送する機器",c:"sys",g:"nwdev"},
+{t:"ブリッジ",d:"MACアドレスを見て、必要な側にだけ転送する機器",c:"sys",g:"nwdev"},
+{t:"スイッチングハブ",d:"MACアドレスを見て、宛先のポートにだけ送る集線装置",c:"sys",g:"nwdev"},
+{t:"リピータハブ",d:"受け取った信号を、全ポートにそのまま流す集線装置",c:"sys",g:"nwdev"},
+{t:"レイヤ2スイッチ",d:"MACアドレスで転送先を決めるスイッチ。スイッチングハブと同じもの",c:"sys",g:"l23"},
+{t:"レイヤ3スイッチ",d:"IPアドレスで転送先を決められるスイッチ。ルータの機能を併せ持つ",c:"sys",g:"l23"},
+
+/* -- 第8章 マネジメント系 -- */
+{t:"PMBOKガイド",d:"プロジェクトマネジメントの知識体系をまとめたもの",c:"mgmt",g:"body"},
+{t:"ITIL",a:"ITIL",d:"ITサービスマネジメントの成功事例をまとめたもの。運用の指針",c:"mgmt",g:"body"},
+{t:"クリティカルパス",d:"工程のうち、全体の所要期間を決めてしまう、いちばん余裕のない経路",c:"mgmt",g:"path"},
+{t:"OLA",a:"OLA",f:"Operational Level Agreement",d:"社内の部門間で取り交わすサービス水準の合意。SLAを支えるための内部の取り決め",c:"mgmt",g:"slaola"},
+{t:"インシデント管理",d:"サービスをできるだけ早く復旧させる活動。原因究明より復旧を優先する",c:"mgmt",g:"itsm"},
+{t:"問題管理",d:"インシデントの根本原因を突き止め、再発を防ぐ活動",c:"mgmt",g:"itsm"},
+{t:"可用性管理",d:"合意した水準でサービスを使える状態に保つ活動",c:"mgmt",g:"itsm"},
+{t:"キャパシティ管理",d:"必要な性能と容量を、費用を踏まえて確保する活動",c:"mgmt",g:"itsm"},
+{t:"情報セキュリティ管理基準",d:"組織がISMSを実践するための管理策をまとめた基準。**実践する側**の基準",c:"mgmt",g:"auditstd"},
+{t:"情報セキュリティ監査基準",d:"監査人が監査を行う際に従う基準。**監査する側**の基準",c:"mgmt",g:"auditstd"},
+{t:"内部統制",d:"業務が適正に行われることを確保するために、組織内に整備する仕組み",c:"mgmt",g:"control"},
+{t:"IT統制",d:"内部統制のうち、ITに関わる部分",c:"mgmt",g:"control"},
+{t:"予防統制",d:"問題が起きないように、あらかじめ防ぐ統制",c:"mgmt",g:"control2"},
+{t:"発見統制",d:"問題が起きたことを、後から見つけ出す統制",c:"mgmt",g:"control2"},
+{t:"IT全般統制",d:"業務処理統制が有効に働く土台を整える統制。アクセス管理や変更管理など",c:"mgmt",g:"control3"},
+{t:"IT業務処理統制",d:"個々の業務処理が正確に行われることを確保する統制。入力チェックなど",c:"mgmt",g:"control3"},
+{t:"ITガバナンス",d:"ITの活用を、経営目標に沿って統制する仕組み",c:"mgmt",g:"gov"},
+{t:"コーポレートガバナンス",d:"企業経営が健全に行われるよう監視・統制する仕組み",c:"mgmt",g:"gov"},
+{t:"情報セキュリティガバナンス",d:"情報セキュリティを経営の一部として統制する仕組み",c:"mgmt",g:"gov"},
+
+/* -- 第9章 ストラテジ系 -- */
+{t:"BPR",a:"BPR",f:"Business Process Reengineering",d:"業務プロセスを根本から作り直すこと",c:"strat",g:"bp"},
+{t:"BPM",a:"BPM",f:"Business Process Management",d:"業務プロセスを継続的に分析・改善していく管理手法",c:"strat",g:"bp"},
+{t:"BPO",a:"BPO",f:"Business Process Outsourcing",d:"業務プロセスそのものを外部に委託すること",c:"strat",g:"bp"},
+{t:"要求分析",d:"利用者が何を求めているかを引き出し、整理する工程",c:"strat",g:"req"},
+{t:"要件定義",d:"分析した要求を、システムが満たすべき条件として明確に定める工程",c:"strat",g:"req"},
+{t:"機能要件",d:"システムが備えるべき機能そのものに関する要件",c:"strat",g:"req2"},
+{t:"非機能要件",d:"性能・可用性・セキュリティなど、機能以外の品質に関する要件",c:"strat",g:"req2"},
+{t:"RFI",a:"RFI",f:"Request For Information",d:"情報提供依頼書。調達の前に、実現性や技術情報を尋ねる",c:"strat",g:"rf"},
+{t:"RFP",a:"RFP",f:"Request For Proposal",d:"提案依頼書。要件を示して、具体的な提案を求める",c:"strat",g:"rf"},
+{t:"RFQ",a:"RFQ",f:"Request For Quotation",d:"見積依頼書。価格の提示を求める",c:"strat",g:"rf"},
+{t:"BCM",a:"BCM",f:"Business Continuity Management",d:"BCPを策定・運用・改善していく継続的な管理活動",c:"risk",g:"bcp"},
+{t:"損益計算書",a:"P/L",d:"一定期間の収益と費用をまとめ、利益を示す財務諸表",c:"strat",g:"fin"},
+{t:"貸借対照表",a:"B/S",d:"ある時点の資産・負債・純資産を示す財務諸表",c:"strat",g:"fin"},
+{t:"キャッシュフロー計算書",d:"一定期間の現金の流れ（増減）を示す財務諸表",c:"strat",g:"fin"}
+];
+
+/* 混同グループのひとこと解説（正誤判定のあとに出す） */
+const PAIRNOTE = {
+  mail:"<b>SPF</b>＝送信元IPを検証／<b>DKIM</b>＝電子署名で検証／<b>DMARC</b>＝前2つの結果をどう扱うかの方針。この3つは毎回セットで思い出すこと。",
+  nwdef:"<b>IDS</b>は検知だけ、<b>IPS</b>は遮断まで。<b>WAF</b>はWebアプリの中身を見る。<b>ファイアウォール</b>は宛先やポートで判断する。",
+  bcp:"<b>RTO</b>は「時間」をどこまで、<b>RPO</b>は「データ」をどこまで戻すか。<b>MTPD</b>はこれ以上止まると事業が終わる限界。<b>BCP</b>が計画そのもので、<b>BCM</b>はそれを運用・改善し続ける活動。",
+  rel:"<b>MTBF</b>は壊れるまでの平均（信頼性）、<b>MTTR</b>は直るまでの平均（保守性）。稼働率＝MTBF÷(MTBF+MTTR)。",
+  riskres:"<b>回避</b>＝やめる／<b>低減</b>＝対策する／<b>移転</b>＝保険や外部委託／<b>保有</b>＝受け入れる（＝<b>リスク受容</b>。同じ意味で問われる）。",
+  authnz:"<b>認証</b>は「誰か」の確認、<b>認可</b>は「何ができるか」の許可。順番は認証→認可。",
+  crypto:"<b>共通鍵</b>は速いが鍵配送が課題、<b>公開鍵</b>は配送不要だが遅い。<b>署名は秘密鍵で作り、公開鍵で検証</b>する。",
+  bio:"<b>FRR</b>＝本人を拒否する率、<b>FAR</b>＝他人を通してしまう率。厳しくするとFRRが上がり、緩くするとFARが上がる。",
+  pw:"<b>総当たり</b>＝全組合せ／<b>辞書</b>＝ありがちな語／<b>リスト</b>＝他所の漏えい情報の使い回し／<b>リバース</b>＝パスワード固定でIDを変える。",
+  pii:"<b>要配慮</b>＝取得に同意が必要／<b>仮名加工</b>＝照合しなければ特定できない（社内利用）／<b>匿名加工</b>＝復元不可（第三者提供可）／<b>特定個人情報</b>＝マイナンバーを含む／<b>個人識別符号</b>＝それ単体で個人が分かる符号。",
+  vulndb:"<b>CVE</b>＝どの脆弱性か（番号）／<b>CVSS</b>＝どれくらい危険か（点数）／<b>CWE</b>＝どういう種類か（分類）／<b>JVN</b>＝国内向けの情報ポータル。",
+  team:"<b>CSIRT</b>は起きたあとに対応する、<b>SOC</b>は起きる前から監視する。役割の時間軸が違う。",
+  backup:"<b>フル</b>＝毎回全部／<b>差分</b>＝前回のフル以降（復旧はフル＋最新の差分1本）／<b>増分</b>＝前回のバックアップ以降（復旧は全部を順に適用）。",
+  cia:"<b>機密性</b>＝見せない／<b>完全性</b>＝正しさを保つ／<b>可用性</b>＝使えるようにする。ここに真正性・責任追跡性・否認防止・信頼性が加わる。",
+  mfa:"<b>多要素</b>は「知識・所持・生体」の<b>種類が違う</b>2つ以上。パスワードを2回では多要素にならない。<b>多層防御</b>は名前が似ているだけの別物で、対策を何段にも重ねる考え方。",
+  fed:"<b>SSO</b>は仕組みの目的、<b>SAML</b>は組織間で認証情報を渡す規格、<b>OAuth</b>は権限を委譲する認可の規格、<b>FIDO</b>はパスワードを使わない認証。",
+  target:"<b>標的型</b>＝特定組織を狙う総称／<b>水飲み場型</b>＝よく見るサイトを改ざん／<b>やり取り型</b>＝何度か往復して信用させる／<b>BEC</b>＝送金をだまし取る。",
+  dos:"<b>DoS</b>は単独、<b>DDoS</b>は多数から。<b>DNSアンプ</b>は応答を増幅して当てる。<b>DNSキャッシュポイズニング</b>は偽の名前解決を覚えさせ、<b>SEOポイズニング</b>は検索結果の上位に不正サイトを出す。",
+  mal:"<b>ワーム</b>＝自己複製して広がる／<b>トロイの木馬</b>＝有用なソフトを装う／<b>ルートキット</b>＝存在を隠す／<b>バックドア</b>＝裏口／<b>キーロガー</b>＝入力を記録／<b>ランサムウェア</b>＝暗号化して金銭要求。<b>ダウンローダ</b>は後から本体を落とし、<b>ドロッパ</b>は最初から中に持っている。",
+  social:"<b>フィッシング</b>＝偽サイトへ誘導／<b>スミッシング</b>＝SMS版／<b>ファーミング</b>＝DNSを書き換え、正しいURLでも偽サイトへ／<b>ショルダーハッキング</b>＝のぞき見／<b>トラッシング</b>＝ごみあさり。",
+  phys:"<b>共連れ</b>を防ぐのが<b>アンチパスバック</b>。クリアデスクは机、クリアスクリーンは画面。",
+  actrl:"<b>職務分掌</b>＝権限を分ける／<b>最小権限</b>＝必要最小限だけ与える／<b>知る必要性</b>＝知る必要がある人だけ／<b>ジョブローテーション</b>＝定期的に交代させる。",
+  org:"<b>IPA</b>＝試験実施・届出受付／<b>JPCERT/CC</b>＝対応の調整／<b>NISC</b>＝政府の戦略統括／<b>J-CRAT</b>＝標的型攻撃を受けた組織を救援／<b>J-CSIP</b>＝参加組織で情報共有／<b>ISAC</b>＝業界ごとの情報共有。",
+
+  /* ---- ファイナルチェックシートより ---- */
+  hacker:"<b>ハッカー</b>は本来ほめ言葉、<b>クラッカー</b>が悪用する側、<b>スクリプトキディ</b>はツールを使うだけの素人。",
+  mal2:"<b>スパイウェア</b>＝こっそり情報を抜く／<b>アドウェア</b>＝広告を出す。",
+  virus:"<b>偽セキュリティ対策ソフト型</b>＝偽の警告で買わせる／<b>遠隔操作型</b>＝外から操られる／<b>ポリモーフィック型</b>＝形を変えて検出を逃れる。",
+  recon:"すべて攻撃「前」の下調べ。<b>フットプリンティング</b>＝公開情報を広く／<b>フィンガプリント</b>＝OSやバージョンの特定／<b>ポートスキャン</b>＝開いている入口探し／<b>ウォードライビング</b>＝車で弱い無線LAN探し。",
+  dark:"<b>ダークウェブ</b>＝匿名の闇市場（人がいる）／<b>ダークネット</b>＝使われていないIP空間（人はいない・観測用）。",
+  emi:"<b>テンペスト</b>＝電磁波を傍受／<b>サイドチャネル</b>＝処理時間や消費電力から推測。どちらも物理的に漏れるものを使う。",
+  relay:"<b>踏み台</b>＝身元隠しに使われるPC／<b>第三者中継</b>＝メールサーバの設定不備で迷惑メールに悪用される。",
+  spoof:"<b>IPスプーフィング</b>＝送信元を偽る（なりすまし）／<b>スニッフィング</b>＝流れているものを盗み見る（盗聴）。",
+  session:"<b>セッションハイジャック</b>＝IDを盗んで乗っ取る／<b>セッション固定</b>＝先に用意したIDを使わせる／<b>ドメイン名ハイジャック</b>＝登録情報ごと奪う。",
+  jack:"<b>クリックジャッキング</b>＝クリックを盗む／<b>クリプトジャッキング</b>＝計算資源を盗んでマイニング。",
+  mailatk:"<b>標的型攻撃メール</b>＝特定の相手に狙って送る／<b>迷惑メール</b>＝無差別に大量送信。",
+  escape:"<b>サニタイジング</b>が総称、<b>エスケープ処理</b>は記号を無害な文字に置換。<b>プレースホルダ</b>は値の場所を先に確保する方式で、SQLインジェクションを構造的に防ぐ最も確実な手。",
+  algo:"<b>DES・AES</b>＝共通鍵（AESが現行）／<b>RSA</b>＝公開鍵。ここは「どちらの鍵方式か」で覚える。",
+  mac:"<b>メッセージ認証符号(MAC)</b>＝鍵を使う／<b>メッセージダイジェスト</b>＝鍵を使わないハッシュ値。",
+  zero:"<b>ゼロトラスト</b>＝何も信用せず毎回検証する考え方／<b>ゼロ知識証明</b>＝中身を明かさず知っていることだけ示す技術。名前が似ているだけで別物。",
+  top:"<b>トップマネジメント</b>＝経営層という「人」／<b>トップダウン</b>＝上から進める「やり方」。",
+  policy:"上から <b>基本方針 → 対策基準 → 実施手順</b>。理念・ルール・手順書の3階層。",
+  appetite:"<b>リスク選好</b>＝進んで取る姿勢／<b>リスク忌避</b>＝避けたがる姿勢。",
+  rm:"<b>リスクマネジメント</b>が全体。その中の<b>リスクアセスメント</b>＝特定→<b>分析</b>（大きさを見積る）→<b>評価</b>（対応の要否を決める）。",
+  incident:"<b>事象</b>＝まだ被害と決まっていない出来事／<b>インシデント</b>＝事業を危うくしうる、対応が必要な段階。",
+  selfcheck:"<b>自己点検</b>＝担当者が手順どおりか確かめる／<b>CSA</b>＝業務部署自身が統制の有効性を評価する。",
+  gate:"<b>入口</b>＝入らせない／<b>内部</b>＝入られた後に広げさせない／<b>出口</b>＝持ち出させない。",
+  smtp:"<b>SMTP-AUTH</b>＝送信時に認証／<b>POP before SMTP</b>＝受信認証で一定時間許可（古い）／<b>OP25B</b>＝ISPが25番ポートを塞ぐ。",
+  filter:"<b>URL</b>＝アドレスで判断／<b>コンテンツ</b>＝中身で判断／<b>パケット</b>＝IPやポート番号で判断。",
+  vpntype:"<b>インターネットVPN</b>＝安いが品質保証なし／<b>IP-VPN</b>＝事業者の閉域網で品質保証あり、高い。",
+  proxy:"<b>プロキシ</b>＝内→外の代理／<b>リバースプロキシ</b>＝外→内の代理。向きが逆。",
+  shadow:"<b>シャドーIT</b>＝会社が知らない／<b>サンクションIT</b>＝会社が認めている。",
+  opt:"<b>オプトイン</b>＝同意した人にだけ送る（日本の広告メールはこちら）／<b>オプトアウト</b>＝拒否した人に送らない。",
+  edoc:"<b>e-文書法</b>＝法令で保存義務のある文書全般／<b>電子帳簿保存法</b>＝国税関係の帳簿・書類。",
+  contract:"<b>派遣</b>＝派遣先が直接指揮命令できる／<b>請負</b>＝完成義務あり・指揮命令不可／<b>準委任</b>＝完成義務なし・指揮命令不可／<b>出向</b>＝出向先と雇用関係を結ぶ。",
+  dual:"<b>デュアル</b>＝2系統で同時処理して照合／<b>デュプレックス</b>＝主系と待機系で切替。",
+  standby:"待機系の「温度」。<b>ホット</b>＝起動済みで即切替／<b>ウォーム</b>＝起動済みだが準備が要る／<b>コールド</b>＝止めてある。",
+  fault:"<b>アボイダンス</b>＝そもそも壊さない／<b>トレランス</b>＝壊れても動かす／<b>フェールセーフ</b>＝安全側に倒す／<b>フェールソフト</b>＝機能を落として続ける／<b>フールプルーフ</b>＝誤操作させない。",
+  perf:"<b>レスポンスタイム</b>＝応答が返り始めるまで／<b>ターンアラウンドタイム</b>＝すべて受け取り終わるまで／<b>スループット</b>＝単位時間あたりの処理量。",
+  recover:"<b>ロールバック</b>＝前へ戻す（更新前ログ）／<b>ロールフォワード</b>＝先へ進める（更新後ログ）。",
+  data:"<b>DWH</b>＝ためる／<b>データマート</b>＝切り出す／<b>データマイニング</b>＝掘り出す／<b>ビッグデータ</b>＝扱いきれない量のデータそのもの。",
+  nwdev:"層で覚える。<b>リピータハブ</b>＝物理層／<b>ブリッジ・スイッチングハブ</b>＝データリンク層／<b>ルータ</b>＝ネットワーク層／<b>ゲートウェイ</b>＝全層。",
+  l23:"<b>レイヤ2</b>＝MACアドレスで判断／<b>レイヤ3</b>＝IPアドレスで判断（ルータの機能を持つ）。",
+  body:"<b>PMBOK</b>＝プロジェクト管理の知識体系／<b>ITIL</b>＝ITサービス運用の指針。作るときと、運用するとき。",
+  slaola:"<b>SLA</b>＝提供者と利用者の間／<b>OLA</b>＝社内の部門間。対外か、対内か。",
+  itsm:"<b>インシデント管理</b>＝とにかく早く復旧／<b>問題管理</b>＝原因を突き止め再発防止。この2つの違いが頻出。",
+  auditstd:"<b>管理基準</b>＝実践する側が使う／<b>監査基準</b>＝監査する側が使う。",
+  control:"<b>内部統制</b>が全体、<b>IT統制</b>はそのうちITに関わる部分。",
+  control2:"<b>予防統制</b>＝起きる前に防ぐ／<b>発見統制</b>＝起きた後に見つける。",
+  control3:"<b>IT全般統制</b>＝土台（アクセス管理・変更管理）／<b>IT業務処理統制</b>＝個々の処理（入力チェック）。",
+  gov:"<b>コーポレート</b>＝企業経営全体／<b>IT</b>＝ITの活用／<b>情報セキュリティ</b>＝セキュリティ。統制する対象が違うだけ。",
+  bp:"<b>BPR</b>＝作り直す（1回の改革）／<b>BPM</b>＝継続的に改善し続ける／<b>BPO</b>＝外に出す。",
+  req:"<b>要求分析</b>＝何が欲しいかを引き出す／<b>要件定義</b>＝満たすべき条件として確定させる。",
+  req2:"<b>機能要件</b>＝何ができるか／<b>非機能要件</b>＝性能・可用性・セキュリティなど、それ以外の品質。",
+  rf:"調達の順番。<b>RFI</b>（情報がほしい）→ <b>RFP</b>（提案がほしい）→ <b>RFQ</b>（見積がほしい）。",
+  fin:"<b>損益計算書</b>＝一定期間のもうけ／<b>貸借対照表</b>＝ある時点の財産／<b>キャッシュフロー計算書</b>＝現金の出入り。"
+};
+
+/* 混同グループの見出し（用語集の「まとまり」の名前になる） */
+const GROUPNAME = {
+  pii:"個人情報の区分", lawname:"おもな法律", "cert-org":"規格・認証制度", org:"関係機関",
+  vulndb:"脆弱性情報の枠組み",
+  cia:"情報セキュリティの要素", riskres:"リスク対応の4つ", riskana:"リスクの分析",
+  bcp:"事業継続の指標", rel:"信頼性・保守性の指標", sla:"サービス水準の管理",
+  actrl:"権限をめぐる原則",
+  nwdef:"ネットワークを守る機器", detect:"検知・監視の仕組み", test:"弱点を見つける検査",
+  backup:"バックアップの取り方", wifi:"無線LAN", hide:"情報を隠す技術",
+  web:"Webアプリを狙う攻撃", dos:"止める・誘導する攻撃", target:"特定の相手を狙う攻撃",
+  social:"人を狙う手口", mal:"マルウェアの種類", pw:"パスワードを破る攻撃",
+  authnz:"認証と認可", mfa:"認証を強くする仕組み", fed:"認証をつなぐ規格",
+  bio:"生体認証の精度", crypto:"暗号とハッシュ", pki:"証明書の仕組み", mail:"メールを守る仕組み",
+  team:"対応する組織", ir:"インシデント対応", opsmgmt:"日々の運用管理",
+  audit:"監査", phys:"物理・執務環境", disposal:"廃棄の方法",
+  /* ファイナルチェックシートより */
+  hacker:"攻撃する人の呼び方", mal2:"情報を抜く・広告を出すソフト", virus:"ウイルスの型",
+  recon:"攻撃前の下調べ", dark:"ダーク◯◯", emi:"物理的に漏れる情報",
+  relay:"他人を経由させる", spoof:"なりすまし・盗聴", session:"乗っ取り",
+  jack:"◯◯ジャッキング", mailatk:"迷惑なメール", escape:"入力値の無害化",
+  algo:"暗号アルゴリズム", mac:"メッセージ◯◯", zero:"ゼロ◯◯",
+  top:"トップ◯◯", policy:"ポリシの3階層", appetite:"リスクへの姿勢",
+  rm:"リスクの工程", incident:"事象か、インシデントか", selfcheck:"自分で点検する",
+  gate:"どこで防ぐか", smtp:"メール送信の制限", filter:"何で判断して遮断するか",
+  vpntype:"VPNの種類", proxy:"どちら向きの代理か", shadow:"許可されているか",
+  opt:"同意の取り方", edoc:"電子保存の法律", contract:"契約の形態",
+  dual:"二重化の方式", standby:"待機系の温度", fault:"障害への構え",
+  perf:"性能の測り方", recover:"どちらへ戻すか", data:"データの活用",
+  nwdev:"ネットワーク機器", l23:"スイッチの層",
+  body:"知識体系・指針", path:"工程の管理", slaola:"サービス水準の合意",
+  itsm:"ITサービスの管理活動", auditstd:"実践する側か、監査する側か",
+  control:"統制の範囲", control2:"防ぐか、見つけるか", control3:"土台か、個別処理か",
+  gov:"ガバナンスの対象",
+  bp:"業務プロセスの扱い", req:"要求と要件", req2:"機能か、それ以外か",
+  rf:"調達で出す文書", fin:"財務三表"
+};
+
+/* =========================================================
+   状態
+   ========================================================= */
+const LS = "sg-drill-v1";
+let store = load();
+function load(){
+  try{ return JSON.parse(localStorage.getItem(LS)) || {stats:{}}; }
+  catch(e){ return {stats:{}}; }
+}
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(store)); }catch(e){} }
+function key(term){ return term.t; }
+function stat(term){
+  const k = key(term);
+  if(!store.stats[k]) store.stats[k] = {o:0,x:0};
+  return store.stats[k];
+}
+function isWeak(term){
+  const s = store.stats[key(term)];
+  if(!s) return false;
+  return s.x > 0 && s.x >= s.o;
+}
+
+let picked = new Set(Object.keys(CATS));
+let mode = "quiz";
+let queue = [], idx = 0, answered = false, results = [];
+
+/* =========================================================
+   画面
+   ========================================================= */
+const $ = id => document.getElementById(id);
+const views = {setup:$("setup"), quiz:$("quiz"), cardview:$("cardview"), result:$("result"), glossary:$("glossary")};
+function show(name){
+  Object.keys(views).forEach(k => views[k].classList.toggle("hidden", k !== name));
+  // ドリルの最中はタブを隠す（誤タップで解答が消えないように）
+  const inDrill = (name === "quiz" || name === "cardview");
+  $("tabs").classList.toggle("hidden", inDrill);
+  $("track").classList.toggle("hidden", name === "glossary");
+  $("totop").classList.toggle("hidden", name !== "glossary");
+  window.scrollTo(0,0);
+}
+function dock(html){
+  const d = $("dock");
+  if(!html){ d.classList.add("hidden"); return; }
+  $("dock-in").innerHTML = html;
+  d.classList.remove("hidden");
+}
+function progress(p){ $("fill").style.width = Math.max(0,Math.min(100,p)) + "%"; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+/* ---- 設定画面の組み立て ---- */
+function buildSetup(){
+  const box = $("cats");
+  box.innerHTML = "";
+  Object.keys(CATS).forEach(id => {
+    const n = TERMS.filter(t => t.c === id).length;
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.setAttribute("aria-pressed", picked.has(id));
+    b.innerHTML = esc(CATS[id]) + ' <span style="opacity:.55;font-size:12px">' + n + "</span>";
+    b.onclick = () => {
+      picked.has(id) ? picked.delete(id) : picked.add(id);
+      if(picked.size === 0) picked.add(id);
+      buildSetup();
+    };
+    box.appendChild(b);
+  });
+  $("pick-all").setAttribute("aria-pressed", picked.size === Object.keys(CATS).length);
+  const weakCount = TERMS.filter(isWeak).length;
+  $("pick-weak").innerHTML = "苦手だけ " + '<span style="opacity:.55;font-size:12px">' + weakCount + "</span>";
+  $("pick-weak").disabled = weakCount < 4;
+
+  let seen = 0, ok = 0;
+  Object.keys(store.stats).forEach(k => { seen += store.stats[k].o + store.stats[k].x; ok += store.stats[k].o; });
+  $("s-seen").textContent = seen;
+  $("s-rate").textContent = seen ? Math.round(ok/seen*100) + "%" : "—";
+  $("s-weak").textContent = weakCount;
+  progress(0);
+  $("meta").textContent = "科目A対策";
+}
+
+$("pick-all").onclick = () => { picked = new Set(Object.keys(CATS)); buildSetup(); };
+$("pick-weak").onclick = () => { startWeak(); };
+$("count").oninput = e => $("count-out").textContent = e.target.value;
+document.querySelectorAll("[data-mode]").forEach(b => {
+  b.onclick = () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll("[data-mode]").forEach(x => x.setAttribute("aria-pressed", x === b));
+  };
+});
+$("start").onclick = () => start(TERMS.filter(t => picked.has(t.c)));
+function startWeak(){
+  const pool = TERMS.filter(isWeak);
+  if(pool.length < 4) return;
+  start(pool);
+}
+
+/* ---- 出題の組み立て ---- */
+function shuffle(a){
+  a = a.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function start(pool){
+  if(pool.length < 4){ return; }
+  const n = Math.min(+$("count").value, pool.length);
+  // 苦手な用語を優先的に前へ寄せる
+  const weighted = shuffle(pool).sort((a,b) => (isWeak(b) ? 1 : 0) - (isWeak(a) ? 1 : 0));
+  queue = weighted.slice(0, n);
+  idx = 0; results = [];
+  show(mode === "quiz" ? "quiz" : "cardview");
+  mode === "quiz" ? renderQuiz() : renderCard();
+}
+
+/* 誤答の選択肢：同じ混同グループ → 同じ分野 → 全体 の順で埋める */
+function distractors(correct){
+  const out = [];
+  const push = arr => {
+    shuffle(arr).forEach(t => {
+      if(out.length < 3 && t.t !== correct.t && !out.some(x => x.t === t.t)) out.push(t);
+    });
+  };
+  if(correct.g) push(TERMS.filter(t => t.g === correct.g));
+  push(TERMS.filter(t => t.c === correct.c));
+  push(TERMS);
+  return out;
+}
+
+/* ---- 4択クイズ ---- */
+function renderQuiz(){
+  answered = false;
+  const q = queue[idx];
+  $("meta").textContent = (idx + 1) + " / " + queue.length;
+  progress(idx / queue.length * 100);
+  $("explain").classList.add("hidden");
+  $("q-kind").textContent = "この説明にあてはまる用語は？";
+  $("q-body").className = "qbody";
+  $("q-body").textContent = q.d;
+
+  const opts = shuffle([q].concat(distractors(q)));
+  const box = $("q-choices");
+  box.innerHTML = "";
+  opts.forEach((o, i) => {
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = '<span class="choice__no">' + (i+1) + "</span><span>" + esc(o.t) +
+      (o.a ? ' <span style="font-family:var(--mono);font-size:12.5px;opacity:.7">' + esc(o.a) + "</span>" : "") + "</span>";
+    b.onclick = () => answer(o, q, box);
+    box.appendChild(b);
+  });
+  dock('<button class="btn btn--wide" id="quit">やめる</button>');
+  $("quit").onclick = () => finish(true);
+}
+
+function answer(chosen, q, box){
+  if(answered) return;
+  answered = true;
+  const right = chosen.t === q.t;
+  const s = stat(q);
+  right ? s.o++ : s.x++;
+  save();
+  results.push({q, right, chosen});
+
+  [...box.children].forEach(btn => {
+    const label = btn.textContent.trim();
+    const isCorrect = label.indexOf(q.t) === 0;
+    const isChosen = label.indexOf(chosen.t) === 0;
+    if(isCorrect) btn.dataset.state = "correct";
+    else if(isChosen) btn.dataset.state = "wrong";
+    else btn.dataset.state = "dim";
+  });
+
+  const e = $("explain");
+  let html = '<p class="verdict ' + (right ? "verdict--ok" : "verdict--ng") + '">' +
+    (right ? "◯　正解" : "×　不正解") + "</p>";
+  html += '<dl class="set">';
+  html += "<dt>用語</dt><dd class=\"is-term\">" + esc(q.t) + "</dd>";
+  if(q.a) html += "<dt>略語</dt><dd class=\"is-abbr\">" + esc(q.a) + "</dd>";
+  if(q.f) html += "<dt>英語</dt><dd class=\"is-abbr\">" + esc(q.f) + "</dd>";
+  html += "<dt>はたらき</dt><dd>" + esc(q.d) + "</dd>";
+  html += "<dt>分野</dt><dd>" + esc(CATS[q.c]) + "</dd>";
+  html += "</dl>";
+  if(q.g && PAIRNOTE[q.g]) html += '<p class="pairnote">' + PAIRNOTE[q.g] + "</p>";
+  e.innerHTML = html;
+  e.classList.remove("hidden");
+
+  dock('<button class="btn btn--primary btn--wide" id="next">' +
+    (idx + 1 >= queue.length ? "結果を見る" : "次の問題") + "</button>");
+  $("next").onclick = next;
+  $("next").focus();
+}
+
+function next(){
+  idx++;
+  if(idx >= queue.length){ finish(false); return; }
+  renderQuiz();
+}
+
+/* ---- フラッシュカード ---- */
+let flipped = false;
+function renderCard(){
+  flipped = false;
+  const q = queue[idx];
+  $("meta").textContent = (idx + 1) + " / " + queue.length;
+  progress(idx / queue.length * 100);
+  $("flip-hint").textContent = "タップでめくる";
+  $("flip-body").innerHTML = '<p class="qbody" style="margin:0">' + esc(q.d) + "</p>";
+  dock('<button class="btn" id="prev" style="flex:1">戻る</button>' +
+       '<button class="btn btn--primary" id="fnext" style="flex:2">次へ</button>');
+  $("prev").onclick = () => { if(idx > 0){ idx--; renderCard(); } };
+  $("fnext").onclick = () => { idx++; idx >= queue.length ? finish(false) : renderCard(); };
+}
+function doFlip(){
+  const q = queue[idx];
+  flipped = !flipped;
+  if(flipped){
+    $("flip-hint").textContent = "こたえ";
+    let h = '<p class="qbody qbody--term" style="margin:0">' + esc(q.t) + "</p>";
+    if(q.a) h += '<p class="qabbr">' + esc(q.a) + (q.f ? "　" + esc(q.f) : "") + "</p>";
+    if(q.g && PAIRNOTE[q.g]) h += '<p class="pairnote" style="text-align:left">' + PAIRNOTE[q.g] + "</p>";
+    $("flip-body").innerHTML = h;
+  } else {
+    $("flip-hint").textContent = "タップでめくる";
+    $("flip-body").innerHTML = '<p class="qbody" style="margin:0">' + esc(q.d) + "</p>";
+  }
+}
+$("flip").onclick = doFlip;
+$("flip").onkeydown = e => { if(e.key === " " || e.key === "Enter"){ e.preventDefault(); doFlip(); } };
+
+/* ---- 結果 ---- */
+function finish(aborted){
+  progress(100);
+  if(mode === "card" || aborted && results.length === 0){
+    buildSetup(); show("setup"); dock(null); return;
+  }
+  const ok = results.filter(r => r.right).length;
+  const n = results.length;
+  const pct = n ? Math.round(ok / n * 100) : 0;
+  $("meta").textContent = "結果";
+  $("r-score").innerHTML = pct + '<small>%</small>　<small>' + ok + " / " + n + "問</small>";
+  $("r-note").textContent =
+    pct >= 80 ? "この調子です。分野を広げてもう一周してみてください。" :
+    pct >= 60 ? "合格ラインの目安（60%）は超えています。まちがえた用語を潰しましょう。" :
+                "まだ伸びしろがあります。まちがえた用語だけを繰り返すのが近道です。";
+
+  // 分野別
+  const per = {};
+  results.forEach(r => {
+    const c = r.q.c;
+    per[c] = per[c] || {o:0,n:0};
+    per[c].n++; if(r.right) per[c].o++;
+  });
+  const cbox = $("r-cats");
+  cbox.innerHTML = "";
+  Object.keys(per).forEach(c => {
+    const p = Math.round(per[c].o / per[c].n * 100);
+    const d = document.createElement("div");
+    d.className = "catbar";
+    d.innerHTML = "<span>" + esc(CATS[c]) + '</span><span class="num">' + per[c].o + "/" + per[c].n +
+      '</span><span class="meter"><i style="width:' + p + '%"></i></span>';
+    cbox.appendChild(d);
+  });
+
+  // まちがえた用語
+  const miss = results.filter(r => !r.right);
+  $("r-miss-card").classList.toggle("hidden", miss.length === 0);
+  const ml = $("r-miss");
+  ml.innerHTML = "";
+  miss.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = "<b>" + esc(r.q.t) + (r.q.a ? ' <span style="font-family:var(--mono);font-size:13px">' + esc(r.q.a) + "</span>" : "") +
+      "</b><span>" + esc(r.q.d) + "</span>" +
+      '<span style="color:var(--ng)">あなたの解答：' + esc(r.chosen.t) + "</span>";
+    ml.appendChild(li);
+  });
+
+  show("result");
+  const again = miss.length >= 4;
+  dock((again ? '<button class="btn" id="retry" style="flex:1">まちがえた分</button>' : "") +
+       '<button class="btn btn--primary" id="home" style="flex:2">最初にもどる</button>');
+  if(again) $("retry").onclick = () => {
+    queue = shuffle(miss.map(r => r.q)); idx = 0; results = [];
+    show("quiz"); renderQuiz();
+  };
+  $("home").onclick = () => { buildSetup(); show("setup"); dock(null); };
+}
+
+/* =========================================================
+   用語集（一覧）
+   分野 → まとまり（混同しやすい組）の順に、常に同じ並びで表示する。
+   並びを固定しているのは「あのあたりに書いてあった」で思い出せるようにするため。
+   ========================================================= */
+function buildGlossary(filter){
+  const q = (filter || "").trim().toLowerCase();
+  const match = t => !q ||
+    t.t.toLowerCase().includes(q) ||
+    (t.a && t.a.toLowerCase().includes(q)) ||
+    (t.f && t.f.toLowerCase().includes(q)) ||
+    t.d.toLowerCase().includes(q);
+
+  const list = $("glist");
+  const toc = $("toc");
+  list.innerHTML = ""; toc.innerHTML = "";
+  let total = 0;
+
+  Object.keys(CATS).forEach(cid => {
+    const all = TERMS.filter(t => t.c === cid && match(t));
+    if(!all.length) return;
+    total += all.length;
+
+    // まとまりの並びは TERMS に現れた順で固定する
+    const order = [];
+    all.forEach(t => { const g = t.g || "_"; if(!order.includes(g)) order.push(g); });
+
+    const sec = document.createElement("section");
+    sec.className = "gcat";
+    sec.id = "cat-" + cid;
+    sec.innerHTML = '<h2 class="gcat__h">' + esc(CATS[cid]) + "</h2>" +
+                    '<p class="gcat__n">' + all.length + " 語</p>";
+
+    order.forEach(g => {
+      const items = all.filter(t => (t.g || "_") === g);
+      const wrap = document.createElement("div");
+      wrap.className = "ggroup";
+      const name = g === "_" ? "その他" : (GROUPNAME[g] || "そのほかのまとまり");
+      let h = '<h3 class="ggroup__h">' + esc(name) + "</h3>";
+      if(g !== "_" && PAIRNOTE[g]) h += '<p class="gnote">' + PAIRNOTE[g] + "</p>";
+      h += '<div class="gterms">';
+      items.forEach(t => {
+        const weak = isWeak(t);
+        h += '<div class="gterm' + (weak ? " is-weak" : "") + '">' +
+             '<div class="gterm__t">' + esc(t.t) +
+             (t.a ? '<span class="gterm__a">' + esc(t.a) + "</span>" : "") +
+             (t.f ? '<span class="gterm__f">' + esc(t.f) + "</span>" : "") +
+             (weak ? '<span class="tag-weak">要復習</span>' : "") +
+             "</div>" +
+             '<div class="gterm__d">' + esc(t.d) + "</div>" +
+             "</div>";
+      });
+      h += "</div>";
+      wrap.innerHTML = h;
+      sec.appendChild(wrap);
+    });
+
+    list.appendChild(sec);
+
+    const a = document.createElement("a");
+    a.href = "#cat-" + cid;
+    a.innerHTML = esc(CATS[cid]) + "<span>" + all.length + "</span>";
+    toc.appendChild(a);
+  });
+
+  if(!total){
+    list.innerHTML = '<p class="gempty">「' + esc(filter) + "」に一致する用語はありません</p>";
+    toc.classList.add("hidden");
+  } else {
+    toc.classList.remove("hidden");
+  }
+
+  const weakN = TERMS.filter(isWeak).length;
+  $("gcount").textContent = q
+    ? total + " 語が一致"
+    : "全 " + TERMS.length + " 語" + (weakN ? "　／　要復習 " + weakN + " 語" : "");
+}
+
+let searchTimer;
+$("gsearch").addEventListener("input", e => {
+  clearTimeout(searchTimer);
+  const v = e.target.value;
+  searchTimer = setTimeout(() => buildGlossary(v), 150);
+});
+
+$("totop").onclick = () => window.scrollTo({top:0, behavior:"smooth"});
+
+/* ---- タブ切り替え ---- */
+document.querySelectorAll("[data-tab]").forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll("[data-tab]").forEach(x => x.setAttribute("aria-selected", x === b));
+    dock(null);
+    if(b.dataset.tab === "glossary"){
+      $("meta").textContent = "用語集";
+      buildGlossary($("gsearch").value);
+      show("glossary");
+    } else {
+      buildSetup();
+      show("setup");
+    }
+  };
+});
+
+/* ---- キーボード ---- */
+document.addEventListener("keydown", e => {
+  if(views.quiz.classList.contains("hidden")) return;
+  if(!answered && e.key >= "1" && e.key <= "4"){
+    const b = $("q-choices").children[+e.key - 1];
+    if(b) b.click();
+  } else if(answered && (e.key === "Enter" || e.key === " ")){
+    e.preventDefault(); next();
+  }
+});
+
+buildSetup();
+})();
+</script>
