@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>AI lab｜Growl LaLaLa Design</title>
+<meta name="description" content="AIを道具として使いながら作った、小さなWebアプリの置き場所です。外部ライブラリを使わず、1ファイルで完結させています。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232B4C7E'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' font-style='italic' fill='%23ffffff' text-anchor='middle'%3Eai%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="Growl LaLaLa Design">
+<meta property="og:title" content="AI lab｜Growl LaLaLa Design">
+<meta property="og:description" content="AIを道具として使いながら作った、小さなWebアプリの置き場所です。">
+<meta name="twitter:card" content="summary">
+<!-- TODO: 公開URLが決まったら og:url と og:image（1200x630のPNG）を足す -->
+
+<style>
+:root{
+  --paper:#FBFAF7; --card:#FFFFFF; --ink:#1C1F26; --ink-soft:#5C6274;
+  --line:#E4E1D9; --line-soft:#EFEDE7;
+  --ai:#2B4C7E; --ai-soft:#EAF0F8;
+  --shadow:0 1px 2px rgba(28,31,38,.06), 0 8px 24px -12px rgba(28,31,38,.18);
+  --mincho:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+  --gothic:"Hiragino Sans","Yu Gothic",YuGothic,"Noto Sans JP",system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14161B; --card:#1B1E25; --ink:#E9E7E2; --ink-soft:#9BA1AF;
+    --line:#2B2F39; --line-soft:#22262E;
+    --ai:#82ABDE; --ai-soft:#1D2734;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14161B; --card:#1B1E25; --ink:#E9E7E2; --ink-soft:#9BA1AF;
+  --line:#2B2F39; --line-soft:#22262E;
+  --ai:#82ABDE; --ai-soft:#1D2734;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--gothic); line-height:1.9; letter-spacing:.01em;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:760px; margin:0 auto; padding:72px 22px 96px}
+
+/* ヘッダー */
+header{margin-bottom:56px}
+.logo{
+  font-family:Georgia,"Times New Roman",serif; font-style:italic;
+  font-size:clamp(34px,7vw,46px); color:var(--ai); line-height:1.2; letter-spacing:.01em;
+}
+header p{margin-top:16px; color:var(--ink-soft); font-size:15px}
+
+/* 見出し */
+h2{
+  font-family:var(--mincho); font-size:19px; font-weight:600;
+  margin:56px 0 18px; padding-bottom:12px; border-bottom:1px solid var(--line);
+}
+h2 .en{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-left:10px; letter-spacing:.1em}
+
+/* アプリカード */
+.apps{display:grid; gap:14px}
+.card{
+  display:block; background:var(--card); border:1px solid var(--line);
+  border-radius:10px; padding:22px 24px; text-decoration:none; color:inherit;
+  box-shadow:var(--shadow); transition:transform .18s, border-color .18s;
+}
+.card:hover{transform:translateY(-2px); border-color:var(--ai)}
+.card .name{font-size:18px; font-weight:700; margin-bottom:6px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.card .badge{
+  font-size:11px; font-weight:600; padding:3px 9px; border-radius:99px;
+  background:var(--ai-soft); color:var(--ai); letter-spacing:.04em;
+}
+.card .why{font-size:14px; color:var(--ink-soft); line-height:1.8}
+.card .meta{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:12px; letter-spacing:.04em}
+
+/* 箇条書き */
+ul.plain{list-style:none; font-size:15px}
+ul.plain li{padding-left:22px; position:relative; margin-bottom:10px; color:var(--ink-soft)}
+ul.plain li::before{content:"—"; position:absolute; left:0; color:var(--ai)}
+ul.plain li b{color:var(--ink)}
+
+.lead{font-size:15px; color:var(--ink-soft)}
+.lead b{color:var(--ink)}
+
+/* フッター */
+footer{
+  margin-top:72px; padding-top:28px; border-top:1px solid var(--line);
+  font-size:13px; color:var(--ink-soft); line-height:1.95;
+}
+footer p{margin-bottom:10px}
+footer p:last-child{margin-bottom:0}
+footer b{color:var(--ink)}
+a{color:var(--ai)}
+a:hover{text-decoration:underline}
+code{font-family:var(--mono); font-size:.88em; background:var(--line-soft); padding:1px 6px; border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">AI lab</div>
+    <p>AIを道具として使いながら作った、小さなWebアプリの置き場所です。</p>
+  </header>
+
+  <h2>置いてあるもの<span class="en">apps</span></h2>
+  <div class="apps">
+
+    <a class="card" href="./sg-terms/">
+      <div class="name">SG用語ドリル <span class="badge">311語</span></div>
+      <div class="why">
+        情報セキュリティマネジメント試験（SG）の頻出用語。
+        <b>カテゴリ別に絞り込め、略語には正式名称</b>がついています。隙間時間に回せます。
+      </div>
+      <div class="meta">HTML / CSS / JavaScript　—　外部ライブラリなし</div>
+    </a>
+
+    <!-- アプリを足すときは、このカードを1つコピーして中身を差し替える -->
+
+  </div>
+
+  <h2>つくりかた<span class="en">how</span></h2>
+  <ul class="plain">
+    <li><b>1アプリ ＝ 1フォルダ、1ファイル完結。</b>持ち運べる形にしています</li>
+    <li><b>外部ライブラリ・CDNは使いません。</b>HTML / CSS / JavaScript だけ</li>
+    <li><b>スマホ優先。</b>ダークモードにも対応しています</li>
+    <li><b>インストール不要。</b>ブラウザで開けば動きます</li>
+  </ul>
+
+  <h2>AIとの付き合い方<span class="en">policy</span></h2>
+  <p class="lead">
+    制作にはAIツールを併用しています。<br><br>
+    ただし「AIに作らせて終わり」にはしていません。
+    <b>自分で説明・修正・保守できる範囲</b>のものだけを置いています。
+  </p>
+
+  <footer>
+    <p>※ 個人が学習・実験のために作成した<b>非公式</b>のツールです。内容の正確性・完全性は保証しません。<br>
+       試験対策としてご利用の場合は、公式教材および <a href="https://www.ipa.go.jp/shiken/" target="_blank" rel="noopener">IPA</a> の公開情報で必ずご確認ください。</p>
+    <p>ライセンス：<b>MIT</b>（再配布・改変の際は著作権表示を残してください）</p>
+    <p>制作：<b><a href="https://growl-lalala-design.com" target="_blank" rel="noopener">Growl LaLaLa Design</a></b>（福岡）　ウェブデザイン／グラフィックデザイン／イラスト制作</p>
+  </footer>
+
+</div>
+</body>
+</html>
